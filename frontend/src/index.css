@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+/* Mobile default (0 - 767px) */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #ffffff !important; /* white for mobile */
+} 
+
+
+.bg-bottom {
+  background: url("/assets/ui/icons/bottom.png") no-repeat center bottom;
+  background-size: 100% 100%;
+}
+
+
+.call-vibrate {
+  animation: call-vibration 2.8s infinite;
+  filter: drop-shadow(0 0 12px rgba(255, 217, 3, 0.363));
+}
+
+/* Realistic phone vibration */
+@keyframes call-vibration {
+  0%   { transform: translate(0); }
+  3%   { transform: translate(-2px, 2px); }
+  6%   { transform: translate(2px, -2px); }
+  9%   { transform: translate(-2px, -2px); }
+  12%  { transform: translate(2px, 2px); }
+  15%  { transform: translate(0); }
+
+  /* pause */
+  30%  { transform: translate(0); }
+
+  /* second vibration burst */
+  33%  { transform: translate(-2px, 2px); }
+  36%  { transform: translate(2px, -2px); }
+  39%  { transform: translate(-2px, -2px); }
+  42%  { transform: translate(2px, 2px); }
+  45%  { transform: translate(0); }
+
+  /* long pause */
+  100% { transform: translate(0); }
+}
+
+
+
+/* Rich text from ReactQuill */
+.richtext a {
+  color: rgb(249 115 22); 
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.richtext a:hover {
+  color: rgb(234 88 12); 
+}
+
+
+.richtext ol {
+  list-style-type: decimal;
+  padding-left: 1.25rem;
+}
+
+.richtext ul {
+  list-style-type: disc;
+  padding-left: 1.25rem;
+}
+
+.richtext li {
+  margin-bottom: 0.25rem;
+}

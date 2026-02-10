@@ -1,0 +1,16 @@
+# Root level
+node_modules
+.env
+.env.local
+.env.production
+logs
+*.log
+
+# OS / Editor
+.vscode
+.DS_Store
+Thumbs.db
+
+# Build outputs
+dist
+build
