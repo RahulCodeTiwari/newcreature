@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
-const homeTopSubCategorySchema = new mongoose.Schema(
+const homeTopProductSchema = new mongoose.Schema(
   {
-    subCategory: {
+    product: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "SubCategory",
+      ref: "Product",
       required: true,
       unique: true,
     },
@@ -20,4 +20,4 @@ const homeTopSubCategorySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("HomeTopSubCategory", homeTopSubCategorySchema);
+export default mongoose.model("HomeTopProduct", homeTopProductSchema);

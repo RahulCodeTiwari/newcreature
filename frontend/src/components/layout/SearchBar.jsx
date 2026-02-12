@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { searchSubcategories } from "../../api/subCategory.api";
+import { searchProducts } from "../../api/product.api";
 import { Search } from "lucide-react";
 
 const SearchBar = () => {
@@ -19,8 +19,8 @@ const SearchBar = () => {
     const timer = setTimeout(async () => {
       setLoading(true);
       try {
-        const res = await searchSubcategories(query);
-        setResults(res.subcategories || []);
+        const res = await searchProducts(query);
+        setResults(res.products || []);
       } finally {
         setLoading(false);
       }
@@ -32,7 +32,7 @@ const SearchBar = () => {
   const handleSelect = (slug) => {
     setQuery("");
     setResults([]);
-    navigate(`/subcategory/${slug}`);
+    navigate(`/products/${slug}`);
   };
 
   return (

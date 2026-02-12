@@ -1,6 +1,6 @@
 import Category from "../models/Category.model.js";
-import HomeTopSubCategory from "../models/HomeTopSubCategory.model.js";
-import SubCategory from "../models/Subcategory.model.js";
+import HomeTopProduct from "../models/HomeTopProduct.model.js";
+import Product from "../models/Product.model.js";
 import Contact from "../models/Contact.model.js";
 import Blog from "../models/Blog.model.js";
 
@@ -8,8 +8,8 @@ export const getDashboardCounts = async (req, res) => {
   try {
     const data = {
       categories: await Category.countDocuments(),
-      subcategories: await SubCategory.countDocuments(),
-      homeTopSubcategories: await HomeTopSubCategory.countDocuments(),
+      products: await Product.countDocuments(),
+      homeTopProducts: await HomeTopProduct.countDocuments(),
       contacts: await Contact.countDocuments(),
       blogs: await Blog.countDocuments(),
     };

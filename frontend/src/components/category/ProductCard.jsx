@@ -2,10 +2,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const SubCategoryCard = ({ sub }) => {
+const ProductCard = ({ pro }) => {
 const navigate = useNavigate();
   return (
-    <section onClick={() => navigate(`/subcategory/${sub.slug}`)}>
+    <section onClick={() => navigate(`/product/${pro.slug}`)}>
       <div className="border-2 border-gray-300 shadow-sm hover:shadow-md transition rounded-2xl p-2 bg-white flex flex-col ">
 
         {/* IMAGE + TEXT */}
@@ -13,21 +13,21 @@ const navigate = useNavigate();
           
           {/* LEFT – IMAGE */}
         <img
-          src={sub.image}
-          alt={sub.name}
+          src={pro.image}
+          alt={pro.name}
           className="w-2/5 h-60 sm:w-1/3 object-contain cursor-pointer"
         />
           {/* RIGHT – TEXT */}
           <div className="flex-1">
             {/* TITLE */}
             <h2 className="text-base sm:text-xl font-bold uppercase mb-1">
-              {sub.name}
+              {pro.name}
             </h2>
 
             {/* PRICE */}
-            {sub.priceRange && (
+            {pro.priceRange && (
               <p className="text-sky-900 font-semibold text-sm sm:text-lg ">
-                Price Range - ₹{sub.priceRange.min} – ₹{sub.priceRange.max}/-
+                Price Range - ₹{pro.priceRange.min} – ₹{pro.priceRange.max}/-
               </p>
             )}
             <button className="flex-1 bg-[rgb(0,52,102)]  border text-white text-sky-900 px-1 rounded-lg text-sm">
@@ -36,15 +36,15 @@ const navigate = useNavigate();
 
           {/* FEATURES */}
           <div className="text-xs sm:text-sm text-gray-800 mb-2 space-y-1">
-            {sub.features?.map((item, i) => (
+            {pro.features?.map((item, i) => (
               <p key={i}>• {item}</p>
             ))}
           </div>
 
           {/* USAGE */}
-          {sub.usage?.length > 0 && (
+          {pro.usage?.length > 0 && (
             <p className="text-xs sm:text-sm text-gray-700">
-              <b>Usage:</b> {sub.usage.join(", ")}
+              <b>Usage:</b> {pro.usage.join(", ")}
             </p>
           )}
 
@@ -56,9 +56,9 @@ const navigate = useNavigate();
       {/* BUTTONS */}
       <div className="mt-2 flex  sm:flex-row gap-3">
         
-        {sub.callNumber && (
+        {pro.callNumber && (
           <a
-            href={`tel:${sub.callNumber}`}
+            href={`tel:${pro.callNumber}`}
             className="flex-1 flex items-center justify-center gap-2
             bg-[rgb(0,52,102)] text-white py-2
             rounded-lg text-sm md:text-base md:py-3
@@ -73,9 +73,9 @@ const navigate = useNavigate();
           </a>
         )}
 
-        {sub.whatsappNumber && (
+        {pro.whatsappNumber && (
           <a
-            href={`https://wa.me/${sub.whatsappNumber}`}
+            href={`https://wa.me/${pro.whatsappNumber}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 flex items-center justify-center gap-2
@@ -92,9 +92,9 @@ const navigate = useNavigate();
           </a>
         )}
 
-        {sub.brochureUrl && (
+        {pro.brochureUrl && (
           <a
-            href={sub.brochureUrl}
+            href={pro.brochureUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 flex items-center justify-center gap-2
@@ -120,4 +120,4 @@ const navigate = useNavigate();
   );
 };
 
-export default SubCategoryCard;
+export default ProductCard;

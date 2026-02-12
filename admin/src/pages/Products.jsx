@@ -4,11 +4,11 @@ import { AuthContext } from "../auth/authContext";
 import toast from "react-hot-toast";
 import RichTextEditor from "../components/RichTextEditor";
 
-const Subcategory = () => {
+const Products = () => {
   const { adminToken } = useContext(AuthContext);
 
   const [categories, setCategories] = useState([]);
-  const [subcategories, setSubcategories] = useState([]);
+  const [products, setProducts] = useState([]);
   const [groupName, setGroupName] = useState("");
   const [groupNames, setGroupNames] = useState([]);
 
@@ -169,31 +169,31 @@ const removeEditSpec = (index) => {
   };
 
   /* ---------------- FETCH SUBCATEGORIES ---------------- */
- const fetchSubcategories = async (catId) => {
+ const fetchProducts = async (catId) => {
   if (!catId) {
-    setSubcategories([]);
+    setProducts([]);
     setGroupNames([]);
     return;
   }
 
   try {
     const res = await axios.get(
-      `/subcategories?category=${catId}`,
+      `/products?category=${catId}`,
       {
         headers: { Authorization: `Bearer ${adminToken}` },
       }
     );
 
-    const subs = Array.isArray(res.data.subcategories)
-      ? res.data.subcategories
+    const pros = Array.isArray(res.data.products)
+      ? res.data.products
       : [];
 
-    setSubcategories(subs);
+    setProducts(pros);
 
     // 🔥 Safely extract unique group names
     const groups = [
       ...new Set(
-        subs
+        pros
           .map((s) => s.groupName)
           .filter((g) => typeof g === "string" && g.length > 0)
       ),
@@ -204,15 +204,15 @@ const removeEditSpec = (index) => {
 
 
   } catch (err) {
-    console.error("Subcategory fetch error:", err);
-    setSubcategories([]);
+    console.error("Product fetch error:", err);
+    setProducts([]);
     setGroupNames([]);
   }
 };
 
 const fetchGroupNames = async () => {
   try {
-    const res = await axios.get("/subcategories/groups", {
+    const res = await axios.get("/products/groups", {
       headers: { Authorization: `Bearer ${adminToken}` },
     });
 
@@ -302,41 +302,41 @@ const handleAdd = async (e) => {
     if (Object.keys(specs).length)
       formData.append("specifications", JSON.stringify(specs));
 
-    const res = await axios.post("/subcategories", formData, {
+    const res = await axios.post("/products", formData, {
       headers: {
         Authorization: `Bearer ${adminToken}`,
       },
     });
 
-    toast.success("Subcategory added ✅");
-    fetchSubcategories(categoryId);
+    toast.success("Product added ✅");
+    fetchProducts(categoryId);
 
   } catch (err) {
     toast.error(err.response?.data?.message || "Create failed ❌");
   }
 };
 
-const handleEditClick = (sub) => {
+const handleEditClick = (pro) => {
   setIsEditing(true);
-  setEditId(sub._id);
+  setEditId(pro._id);
 
-  setEditName(sub.name || "");
-  setEditPriceMin(sub.priceRange?.min || "");
-  setEditPriceMax(sub.priceRange?.max || "");
-  setEditFeatures(sub.features || "");
-  setEditUsage(sub.usage || "");
-  setEditDescription(sub.description || []);
-  setEditCallNumber(sub.callNumber || "");
-  setEditWhatsappNumber(sub.whatsappNumber || "");
+  setEditName(pro.name || "");
+  setEditPriceMin(pro.priceRange?.min || "");
+  setEditPriceMax(pro.priceRange?.max || "");
+  setEditFeatures(pro.features || "");
+  setEditUsage(pro.usage || "");
+  setEditDescription(pro.description || []);
+  setEditCallNumber(pro.callNumber || "");
+  setEditWhatsappNumber(pro.whatsappNumber || "");
 
-  setEditYoutubeLink(sub.slider?.youtube?.link || "");
+  setEditYoutubeLink(pro.slider?.youtube?.link || "");
 
-  setEditBlueHeading(sub.blueSection?.heading || "");
+  setEditBlueHeading(pro.blueSection?.heading || "");
 
  setEditSpecifications(
-  sub?.specifications &&
-  typeof sub.specifications === "object"
-    ? Object.entries(sub.specifications).map(
+  pro?.specifications &&
+  typeof pro.specifications === "object"
+    ? Object.entries(pro.specifications).map(
         ([key, value]) => ({ key, value })
       )
     : [{ key: "", value: "" }]
@@ -362,10 +362,10 @@ const handleUpdate = async () => {
     );
 
 
-     if (features?.trim()) {
+     if (editFeatures?.trim()) {
       formData.append(
         "features",
-        JSON.stringify(features.split(",").map(f => f.trim()))
+        JSON.stringify(editFeatures.split(",").map(f => f.trim()))
       );
     }
 
@@ -399,13 +399,13 @@ const handleUpdate = async () => {
     if (editImage) formData.append("image", editImage);
     if (editBrochure) formData.append("brochure", editBrochure);
 
-    await axios.put(`/subcategories/${editId}`, formData, {
+    await axios.put(`/products/${editId}`, formData, {
       headers: {
         Authorization: `Bearer ${adminToken}`,
       },
     });
 
-    toast.success("Subcategory updated");
+    toast.success("Product updated");
     setIsEditing(false);
   } catch (err) {
     toast.error("Update failed");
@@ -416,14 +416,14 @@ const handleUpdate = async () => {
 
   /* ---------------- DELETE SUBCATEGORY ---------------- */
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to Delete this subcategory?")) return;
+    if (!window.confirm("Are you sure you want to Delete this procategory?")) return;
 
     try {
-      await axios.delete(`/subcategories/${id}`, {
+      await axios.delete(`/products/${id}`, {
         headers: { Authorization: `Bearer ${adminToken}` },
       });
 
-      setSubcategories((prev) => prev.filter((s) => s._id !== id));
+      setProducts((prev) => prev.filter((s) => s._id !== id));
     } catch (err) {
       console.error("Delete error:", err);
     }
@@ -434,7 +434,7 @@ const handleUpdate = async () => {
   }, []);
 
   useEffect(() => {
-    fetchSubcategories(categoryId);
+    fetchProducts(categoryId);
   }, [categoryId]);
 
   useEffect(() => {
@@ -446,7 +446,7 @@ const handleUpdate = async () => {
     
     <div className="p-6">
        
-      <h1 className="text-2xl font-bold mb-4">Subcategories</h1>
+      <h1 className="text-2xl font-bold mb-4">Products</h1>
 
       {isEditing && (
       <form
@@ -456,7 +456,7 @@ const handleUpdate = async () => {
         }}
         className="space-y-4 border p-4 rounded bg-yellow-50"
       >
-        <h2 className="text-lg font-bold">Update Subcategory</h2>
+        <h2 className="text-lg font-bold">Update Product</h2>
 
         {/* GROUP NAME (READ ONLY or OPTIONAL) */}
         <input
@@ -482,7 +482,7 @@ const handleUpdate = async () => {
         {/* SUBCATEGORY NAME */}
         <input
           type="text"
-          placeholder="Subcategory name"
+          placeholder="Product name"
           value={editName}
           onChange={(e) => setEditName(e.target.value)}
           className="border p-2 rounded w-full"
@@ -696,10 +696,10 @@ const handleUpdate = async () => {
       {/* ACTIONS */}
       <div className="flex gap-3">
         <button
-          type="submit"
+          type="promit"
           className="bg-green-600 text-white px-6 py-2 rounded"
         >
-          Update Subcategory
+          Update Product
         </button>
 
         <button
@@ -753,16 +753,16 @@ const handleUpdate = async () => {
             ))}
           </select>
 
-            {/* Subcategory Name */}
+            {/* Product Name */}
           <input
             type="text"
-            placeholder="Subcategory name (eg: Gas5)"
+            placeholder="Product name (eg: Gas5)"
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="border p-2 rounded"
           />
  
-          <h4 className="font-semibold mt-4">Upload subcategory image (max 1 allowed)</h4>
+          <h4 className="font-semibold mt-4">Upload procategory image (max 1 allowed)</h4>
           <input
             type="file"
             accept="image/*"
@@ -948,10 +948,10 @@ const handleUpdate = async () => {
             </button>
 
             <button
-              type="submit"
+              type="promit"
               className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
             >
-              Add Subcategory
+              Add Product
             </button>
           </div>  
       </form>
@@ -960,35 +960,35 @@ const handleUpdate = async () => {
 
       {/* ===== SUBCATEGORY LIST ===== */}
       <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-        {subcategories.length > 0 ? (
-          subcategories.map((sub) => (
+        {products.length > 0 ? (
+          products.map((pro) => (
             <div
-              key={sub._id}
+              key={pro._id}
               className="border rounded-xl p-4 shadow-sm bg-white"
             >
-              {sub.image && (
+              {pro.image && (
                 <img
-                  src={sub.image}
-                  alt={sub.name}
+                  src={pro.image}
+                  alt={pro.name}
                   className="w-full h-40 object-contain mb-3"
                 />
               )}
-              <h3 className="font-bold text-lg">{sub.name}</h3>
-              {sub.priceRange?.min && sub.priceRange?.max && (
+              <h3 className="font-bold text-lg">{pro.name}</h3>
+              {pro.priceRange?.min && pro.priceRange?.max && (
                 <p className="text-blue-700 font-semibold">
-                  ₹{sub.priceRange.min} – ₹{sub.priceRange.max}
+                  ₹{pro.priceRange.min} – ₹{pro.priceRange.max}
                 </p>
               )}
-              <p>{sub.features?.join(", ")}</p>
-              <p>{sub.usage?.join(", ")}</p>
+              <p>{pro.features?.join(", ")}</p>
+              <p>{pro.usage?.join(", ")}</p>
 
                         
           <div className="flex gap-2 mt-3 flex-wrap">
 
 
-            {sub.callNumber && (
+            {pro.callNumber && (
               <a
-                href={`tel:${sub.callNumber}`}
+                href={`tel:${pro.callNumber}`}
                 className="flex-1 text-center bg-[rgb(0,52,102)] text-white py-2 rounded text-sm cursor-pointer"
               >
                   Call
@@ -996,9 +996,9 @@ const handleUpdate = async () => {
             )}
 
 
-            {sub.whatsappNumber && (
+            {pro.whatsappNumber && (
               <a
-                href={`https://wa.me/${sub.whatsappNumber}`}
+                href={`https://wa.me/${pro.whatsappNumber}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 text-center border border-green-600 text-green-600 py-2 rounded text-sm cursor-pointer"
@@ -1008,9 +1008,9 @@ const handleUpdate = async () => {
             )}
 
 
-          {sub.brochureUrl && (
+          {pro.brochureUrl && (
             <a
-              href={sub.brochureUrl}
+              href={pro.brochureUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 text-center bg-blue-600 text-white py-2 rounded text-sm cursor-pointer"
@@ -1020,7 +1020,7 @@ const handleUpdate = async () => {
           )}
 
           <button
-          onClick={() => handleEditClick(sub)}
+          onClick={() => handleEditClick(pro)}
           className="flex-1 bg-yellow-500 text-white py-2 rounded text-sm"
         >
           Update
@@ -1029,7 +1029,7 @@ const handleUpdate = async () => {
 
 
           <button
-            onClick={() => handleDelete(sub._id)}
+            onClick={() => handleDelete(pro._id)}
             className="flex-1 bg-red-500 text-white py-2 rounded text-sm cursor-pointer"
           >
             Delete
@@ -1043,7 +1043,7 @@ const handleUpdate = async () => {
 
             
           ) : (
-            <p className="col-span-full text-center">No subcategories found</p>
+            <p className="col-span-full text-center">No products found</p>
           )}
         </div>
 
@@ -1051,7 +1051,7 @@ const handleUpdate = async () => {
     );
   };
 
-export default Subcategory;
+export default Products;
 
 
 

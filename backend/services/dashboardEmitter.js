@@ -1,7 +1,7 @@
 import { io } from "../server.js";
 import Category from "../models/Category.model.js";
-import HomeTopSubCategory from "../models/HomeTopSubCategory.model.js";
-import SubCategory from "../models/Subcategory.model.js";
+import HomeTopSubCategory from "../models/HomeTopProduct.model.js";
+import SubCategory from "../models/Product.model.js";
 import Contact from "../models/Contact.model.js";
 import Blog from "../models/Blog.model.js";
 

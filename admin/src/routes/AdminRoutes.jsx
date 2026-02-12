@@ -4,12 +4,10 @@ import Dashboard from "../pages/Dashboard";
 import AdminLayout from "../layouts/AdminLayout";
 import RequireAuth from "../auth/RequireAuth";
 import Categories from "../pages/Categories";
-
-
-import TopSubCategories from "../pages/TopSubCategories";
 import AdminContacts from "../pages/Contacts";
 import AddBlog from "../pages/AddBlog";
-import Subcategories from "../pages/Subcategories";
+import TopProducts from "../pages/TopProducts";
+import Products from "../pages/Products";
 
 const AdminRoutes = () => {
   return (
@@ -23,8 +21,8 @@ const AdminRoutes = () => {
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="categories" element={<Categories />} />
-          <Route path="subcategories" element={<Subcategories />} />
-          <Route path="home-top-subcategories" element={<TopSubCategories />} />
+          <Route path="products" element={<Products />} />
+          <Route path="home-top-products" element={<TopProducts />} />
           <Route path="contacts" element={<AdminContacts />} />
           <Route path="blogs" element={<AddBlog />} />
         </Route>

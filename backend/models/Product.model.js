@@ -1,7 +1,7 @@
 
 import mongoose from "mongoose";
 
-const subCategorySchema = new mongoose.Schema(
+const productSchema = new mongoose.Schema(
   {
     // Parent Category
     category: {
@@ -130,6 +130,6 @@ const subCategorySchema = new mongoose.Schema(
 );
 
 //  Unique index: same category me duplicate subcategory slug na ho
-subCategorySchema.index({ slug: 1, category: 1 }, { unique: true });
+productSchema.index({ slug: 1, category: 1 }, { unique: true });
 
-export default mongoose.model("SubCategory", subCategorySchema);
+export default mongoose.model("Product", productSchema);

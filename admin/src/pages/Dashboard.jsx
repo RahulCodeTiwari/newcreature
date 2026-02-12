@@ -8,8 +8,8 @@ const socket = io(import.meta.env.VITE_API_URL);
 const Dashboard = () => {
   const [counts, setCounts] = useState({
     categories: 0,
-    subcategories: 0,
-    homeTopSubcategories: 0,
+    products: 0,
+    homeTopProducts: 0,
     contacts: 0,
     blogs: 0,
   });
@@ -69,8 +69,8 @@ const Dashboard = () => {
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-10">
         <StatCard title="Categories" value={counts.categories} delay="0" />
-        <StatCard title="Subcategories" value={counts.subcategories} delay="100" />
-        <StatCard title="Homepage Top" value={counts.homeTopSubcategories} delay="200" />
+        <StatCard title="Products" value={counts.products} delay="100" />
+        <StatCard title="Homepage Top" value={counts.homeTopProducts} delay="200" />
         <StatCard title="Contacts" value={counts.contacts} delay="300" />
         <StatCard title="Blogs" value={counts.blogs} delay="400" />
       </div>

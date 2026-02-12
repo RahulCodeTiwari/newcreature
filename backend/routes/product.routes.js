@@ -1,16 +1,16 @@
 import express from "express";
 import {
-  createSubcategory,
-  updateSubcategory,
-  deleteSubcategory,
-  getSubcategories,
-  getSingleSubcategory,
-  getAllSubcategories,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  getProducts,
 
-  getRelatedSubcategories,
-  getSubCategoryGroups,
-  searchSubcategories,
-} from "../controllers/subcategory.controller.js";
+  getAllProducts,
+  getRelatedProducts,
+  getProductGroups,
+  searchProducts,
+  getSingleProduct,
+} from "../controllers/product.controller.js";
 
 import { protect } from "../middlewares/admin.middleware.js";
 import upload from "../middlewares/multer.js";
@@ -20,19 +20,19 @@ const router = express.Router();
 /* PUBLIC ROUTES */
 
 // 1️⃣ Get subcategories by category query (?category=slugOrId)
-router.get("/", getSubcategories);
+router.get("/", getProducts);
 
-router.get("/groups", getSubCategoryGroups);
+router.get("/groups", getProductGroups);
 
 // 2️⃣ Get single subcategory by slug (ALWAYS LAST to prevent conflicts)
-router.get("/related", getRelatedSubcategories);
-router.get("/search", searchSubcategories);
-router.get("/:slug", getSingleSubcategory);
+router.get("/related", getRelatedProducts);
+router.get("/search", searchProducts);
+router.get("/:slug", getSingleProduct);
 
 
 
 // 3️⃣ Optional: get all subcategories (admin/public)
-router.get("/all", getAllSubcategories);
+router.get("/all", getAllProducts);
 
 /* ADMIN ROUTES */
 
@@ -46,7 +46,7 @@ router.post(
     { name: "sliderImages", maxCount: 5 },
     { name: "blueImages", maxCount: 5 },
   ]),
-  createSubcategory
+  createProduct
 );
 
 // Update SubCategory
@@ -59,10 +59,10 @@ router.put(
     { name: "sliderImages", maxCount: 5 },
     { name: "blueImages", maxCount: 5 },
   ]),
-  updateSubcategory
+  updateProduct
 );
 
 // Delete SubCategory
-router.delete("/:id", protect, deleteSubcategory);
+router.delete("/:id", protect, deleteProduct);
 
 export default router;

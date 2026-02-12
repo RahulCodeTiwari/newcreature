@@ -1,6 +1,6 @@
 import { useSearchParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { searchSubcategories } from "../api/subCategory.api";
+import { searchProducts } from "../api/product.api";
 
 const SearchResultPage = () => {
   const [params] = useSearchParams();
@@ -9,8 +9,8 @@ const SearchResultPage = () => {
 
   useEffect(() => {
     if (!query) return;
-    searchSubcategories(query).then((res) =>
-      setData(res.subcategories || [])
+    searchProducts(query).then((res) =>
+      setData(res.products || [])
     );
   }, [query]);
 
@@ -24,7 +24,7 @@ const SearchResultPage = () => {
         {data.map((item) => (
           <Link
             key={item._id}
-            to={`/subcategory/${item.slug}`}
+            to={`/product/${item.slug}`}
             className="border p-3 rounded hover:shadow"
           >
             <img

@@ -24,7 +24,7 @@ const ProductCard = ({
 
   //  Detail page link (same for image & view more)
   const detailLink = product.slug
-    ? `/subcategory/${product.slug}`
+    ? `/product/${product.slug}`
     : "#";
 
   // WhatsApp link

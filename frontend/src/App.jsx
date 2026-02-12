@@ -3,8 +3,8 @@ import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import Home from "./pages/Home";
 import CategoryPage from "./pages/CategoryPage";
-import SubCategoryPage from "./pages/subCategoryPage";
-import SubCategoryDetailPage from "./pages/SubCategoryDetailPage";
+
+import ProductDetailPage from "./pages/ProductDetailPage";
 import Blog from "./pages/Blog";
 import About from "./pages/About";
 import ContactPage from "./pages/Contact";
@@ -12,6 +12,8 @@ import BlogDetail from "./pages/BlogDetail";
 import { Toaster } from "react-hot-toast";
 import SearchResultPage from "./pages/SearchResultPage";
 import ScrollToTop from "./components/layout/ScrollToTop";
+import SlashRedirect from "./components/layout/SlashRedirect";
+import ProductPage from "./pages/productPage";
 
 
 function App() {
@@ -28,13 +30,13 @@ function App() {
 
       <ScrollToTop />
 
-
+ <SlashRedirect />
       <Navbar />
         <main className="pt-0">
         <Routes>
           <Route path="/" element={<Home />} />
        
-          <Route path="/about" element={<About />} />
+          <Route path="/about/" element={<About />} />
           <Route path="/contact" element={<ContactPage />} />
 
             {/* sirf public pages yahan */}
@@ -42,16 +44,15 @@ function App() {
               
           <Route
              path="/categories/:slug"
-            element={<SubCategoryPage />}
+            element={<ProductPage />}
           />
 
-          <Route path="/subcategory/:slug" element={<SubCategoryDetailPage />} />
+          {/* <Route path="/subcategory/:slug" element={<SubCategoryDetailPage />} /> */}
+           <Route path="/product/:slug" element={<ProductDetailPage />} />
           <Route path="/search" element={<SearchResultPage />} />
 
-
-             <Route path="/blog" element={<Blog />} />
+          <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogDetail />} />
-
 
           </Routes>
         </main>

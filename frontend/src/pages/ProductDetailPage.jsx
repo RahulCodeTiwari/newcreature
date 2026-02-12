@@ -1,7 +1,7 @@
 
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getRelatedSubcategories, getSingleSubCategory } from "../api/subCategory.api";
+import { getRelatedProducts, getSingleProduct } from "../api/product.api";
 import ReviewSlider from "../components/home/ReviewSlider";
 import InquirySection from "../components/home/InquirySection";
 import PreviousDetails from "../components/home/previousDetails";
@@ -21,23 +21,23 @@ const getYouTubeVideoId = (url) => {
 };
 
 
-const SubCategoryDetailPage = () => {
+const ProductDetailPage = () => {
   const { slug } = useParams();
-  const [subcategory, setSubcategory] = useState(null);
-  const [relatedSubcategories, setRelatedSubcategories] = useState([]);
+  const [product, setProduct] = useState(null);
+  const [relatedProducts, setRelatedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
   const [showAllBlocks, setShowAllBlocks] = useState(false);
 
 const slides = [
-  ...(subcategory?.slider?.images || []),
-  ...(subcategory?.slider?.youtube?.link ? ["YOUTUBE"] : []),
+  ...(product?.slider?.images || []),
+  ...(product?.slider?.youtube?.link ? ["YOUTUBE"] : []),
 ];
 
 
 
   /* 🔹 YOUTUBE THUMBNAIL AUTO GENERATE */
-  const videoId = getYouTubeVideoId(subcategory?.slider?.youtube?.link);
+  const videoId = getYouTubeVideoId(product?.slider?.youtube?.link);
   const youtubeThumbnail = videoId
     ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
     : "";
@@ -56,10 +56,10 @@ const slides = [
     /* 🔹 FETCH SUBCATEGORY */
   useEffect(() => {
     setLoading(true);
-    getSingleSubCategory(slug)
+    getSingleProduct(slug)
       .then((res) => {
      
-        setSubcategory(res.subcategory || null);
+        setProduct(res.product || null);
         
       })
       .finally(() => setLoading(false));
@@ -69,29 +69,29 @@ const slides = [
   
   /* 🔹 FETCH RELATED */
 useEffect(() => {
-  if (!subcategory) return;
+  if (!product) return;
 
-  getRelatedSubcategories({
-    groupName: subcategory.groupName,
-    categoryId: subcategory.category,
-    currentId: subcategory._id,
+  getRelatedProducts({
+    groupName: product.groupName,
+    categoryId: product.category,
+    currentId: product._id,
   })
     .then((res) => {
     
-      setRelatedSubcategories(res.subcategories || []);
+      setRelatedProducts(res.products || []);
     })
     .catch((err) => console.error(err));
-}, [subcategory]);
+}, [product]);
 
 
   if (loading) return <p className="p-4">Loading...</p>;
-  if (!subcategory) return <p className="p-4">Subcategory not found</p>;
+  if (!product) return <p className="p-4">Product not found</p>;
 
 
   return (
     <div className="w-full mx-auto px-4 ">
       <h1 className="text-xl font-bold  uppercase ml-10">
-            {subcategory.name}
+            {product.name}
       </h1>
         <button className="text-[rgb(0,52,102)] font-semibold ml-10">Get latest price</button>
               {/* 🔹 TOP SECTION */}
@@ -120,40 +120,10 @@ useEffect(() => {
                   )}
 
             {/* YOUTUBE SLIDE */}
-           
-{/* 
-            {slide === "YOUTUBE" && (
-  <a
-    href={subcategory.slider.youtube.link}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="ml-12 lg:ml-24 w-full h-full relative cursor-pointer rounded overflow-hidden block"
-  >
-    <img
-      src={subcategory.slider.youtube.thumbnail}
-      className="w-full h-full object-cover"
-      alt="YouTube Video"
-    />
-
- 
-    <div className="absolute inset-0 flex items-center justify-center">
-      <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center">
-        <svg
-          className="w-8 h-8 text-white"
-          fill="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path d="M8 5v14l11-7z" />
-        </svg>
-      </div>
-    </div>
-  </a>
-)} */}
-
 
   {slide === "YOUTUBE" && videoId && (
                   <a
-                    href={subcategory?.slider?.youtube?.link}
+                    href={product?.slider?.youtube?.link}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="ml-12 lg:ml-24 w-full h-full relative block rounded overflow-hidden cursor-pointer"
@@ -214,23 +184,23 @@ useEffect(() => {
         {/* BASIC INFO */}
         <div>
           {/* PRICE */}
-          {subcategory.priceRange?.min && subcategory.priceRange?.max ? (
+          {product.priceRange?.min && product.priceRange?.max ? (
             <p className="text-xl text-[rgb(0,52,102)] font-semibold mb-2">
-              ₹ {subcategory.priceRange.min} – ₹ {subcategory.priceRange.max}
+              ₹ {product.priceRange.min} – ₹ {product.priceRange.max}
             </p>
           ) : (
             <p className="text-gray-500 mb-4">Price not available</p>
           )}
 
           {/* Specifications */}
-             {subcategory.specifications && (
+             {product.specifications && (
                 <>
                   <div className="bg-[rgb(0,52,102)] text-white text-center font-semibold px-4 py-1 md:py-2 p-2 shadow-sm">
                       PRODUCT SPECIFICATION
                   </div>
                 <table className="w-full text-sm shadow-xl border-collapse">
                   <tbody>
-                    {Object.entries(subcategory.specifications).map(([key, val]) => (
+                    {Object.entries(product.specifications).map(([key, val]) => (
                       <tr key={key}>
                         <td className="px-1 py-1 font-medium whitespace-nowrap">
                           {key}
@@ -248,9 +218,9 @@ useEffect(() => {
                 {/* BUTTONS */}
       <div className="mt-4 flex  sm:flex-row gap-3">
         
-        {subcategory.callNumber && (
+        {product.callNumber && (
           <a
-            href={`tel:${subcategory.callNumber}`}
+            href={`tel:${product.callNumber}`}
             className="flex-1 flex items-center justify-center gap-2
             bg-[rgb(0,52,102)] text-white py-2
             rounded-lg text-sm md:text-base md:py-3
@@ -265,9 +235,9 @@ useEffect(() => {
           </a>
         )}
 
-        {subcategory.whatsappNumber && (
+        {product.whatsappNumber && (
           <a
-            href={`https://wa.me/${subcategory.whatsappNumber}`}
+            href={`https://wa.me/${product.whatsappNumber}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 flex items-center justify-center gap-2
@@ -284,9 +254,9 @@ useEffect(() => {
           </a>
         )}
 
-        {subcategory.brochureUrl && (
+        {product.brochureUrl && (
           <a
-            href={subcategory.brochureUrl}
+            href={product.brochureUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 flex items-center justify-center gap-2
@@ -315,7 +285,7 @@ useEffect(() => {
       </div>
 
       {/* Description blocks */}
-        {subcategory.description?.map((block, i) => {
+        {product.description?.map((block, i) => {
           if(!showAllBlocks && i > 0) return null;
 
           return (
@@ -334,7 +304,7 @@ useEffect(() => {
         })}
 
         {/* View More / View less */}
-        {subcategory.description?.length > 1 && !showAllBlocks && (
+        {product.description?.length > 1 && !showAllBlocks && (
           <button
             onClick={() => setShowAllBlocks(true)}
             className=" text-blue-600 text-sm font-semibold mmt-2 mb-2 ml-auto block"
@@ -354,18 +324,18 @@ useEffect(() => {
 
 
       {/* 🔹 BLUE SECTION */}
- {subcategory.blueSection?.heading ||
-subcategory.blueSection?.images?.length > 0 ? (
+ {product.blueSection?.heading ||
+product.blueSection?.images?.length > 0 ? (
   <div className="rounded">
-    {subcategory.blueSection.heading && (
+    {product.blueSection.heading && (
       <h2 className="text-xl font-bold text-center bg-[rgb(0,52,102)] text-white mb-2">
-        {subcategory.blueSection.heading}
+        {product.blueSection.heading}
       </h2>
     )}
 
-    {subcategory.blueSection.images?.length > 0 && (
+    {product.blueSection.images?.length > 0 && (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {subcategory.blueSection.images.map((img, i) => (
+        {product.blueSection.images.map((img, i) => (
           <img
             key={i}
             src={img}
@@ -383,36 +353,17 @@ subcategory.blueSection?.images?.length > 0 ? (
 
       <h3 className="text-xl  text-center bg-[rgb(0,52,102)] text-white py-1">Related Products</h3>
 {/* 🔹 RELATED SUBCATEGORIES */}
- {subcategory && relatedSubcategories.length > 0 && (
+ {product && relatedProducts.length > 0 && (
   <div className="mt-8 px-4">
     <h3 className="text-xl font-semibold text-center mb-4 uppercase">
-      {subcategory.groupName}
+      {product.groupName}
     </h3>
 
-    {/* <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-      {relatedSubcategories.map((item) => (
-        <Link
-          key={item._id}
-          to={`/subcategory/${item.slug}`}
-          className="border rounded-lg p-3 hover:shadow-md"
-        >
-          <img
-            src={item.image || "/assets/no-image.png"}
-            alt={item.name}
-            className="w-full h-32 object-contain mb-2"
-          />
-          <p className="text-sm font-semibold text-center">
-            {item.name}
-          </p>
-        </Link>
-      ))}
-    </div> */}
-
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-  {relatedSubcategories.map((item) => (
+  {relatedProducts.map((item) => (
     <Link
       key={item._id}
-      to={`/subcategory/${item.slug}`}
+      to={`/product/${item.slug}`}
       className="group bg-[#f4f9fc] rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition"
     >
       {/* IMAGE */}
@@ -447,6 +398,6 @@ subcategory.blueSection?.images?.length > 0 ? (
   );
 };
 
-export default SubCategoryDetailPage;
+export default ProductDetailPage;
 
 

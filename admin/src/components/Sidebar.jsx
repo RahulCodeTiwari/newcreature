@@ -24,13 +24,13 @@ const Sidebar = () => {
           Categories
         </NavLink>
 
-        <NavLink to="/admin/subcategories" style={linkStyle}>
-          Subcategories
+        <NavLink to="/admin/products" style={linkStyle}>
+          Products
         </NavLink>
 
 
-        <NavLink to="/admin/home-top-subcategories" style={linkStyle}>
-          homePageTopSubcatories
+        <NavLink to="/admin/home-top-Products" style={linkStyle}>
+          homePageTopProducts
         </NavLink>
 
         <NavLink to="/admin/contacts" style={linkStyle}>

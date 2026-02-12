@@ -58,8 +58,6 @@ const AddBlog = () => {
       return toast.error("All headings and descriptions are required");
     }
 
-   
-
     try {
       setLoading(true);
 

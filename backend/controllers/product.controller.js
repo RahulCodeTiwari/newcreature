@@ -2,7 +2,7 @@
 import mongoose from "mongoose";
 import slugify from "slugify";
 import cloudinary from "../config/cloudinary.js";
-import SubCategory from "../models/Subcategory.model.js";
+import Product from "../models/Product.model.js";
 import Category from "../models/Category.model.js";
 import { emitDashboardUpdate } from "../services/dashboardEmitter.js";
 
@@ -32,7 +32,7 @@ const uploadToCloudinary = (file, folder, resource_type = "image") =>
   
 
 /* ================== CREATE SUBCATEGORY ================== */
-export const createSubcategory = async (req, res) => {
+export const createProduct = async (req, res) => {
   try {
     const {
       name,
@@ -85,7 +85,7 @@ export const createSubcategory = async (req, res) => {
 
     const slug = slugify(name, { lower: true, strict: true });
 
-    const exists = await SubCategory.findOne({ slug, category: categoryId });
+    const exists = await Product.findOne({ slug, category: categoryId });
     if (exists) {
       return res.status(409).json({
         success: false,
@@ -106,7 +106,7 @@ export const createSubcategory = async (req, res) => {
     if (req.files?.image?.[0]) {
       imageUrl = await uploadToCloudinary(
         req.files.image[0],
-        "creature_industry/subcategories"
+        "creature_industry/products"
       );
     }
 
@@ -114,7 +114,7 @@ export const createSubcategory = async (req, res) => {
     if (req.files?.brochure?.[0]) {
       brochureUrl = await uploadToCloudinary(
         req.files.brochure[0],
-        "creature_industry/subcategories/brochures",
+        "creature_industry/products/brochures",
         "raw"
       );
     }
@@ -126,7 +126,7 @@ export const createSubcategory = async (req, res) => {
         sliderImages.push(
           await uploadToCloudinary(
             file,
-            "creature_industry/subcategories/slider"
+            "creature_industry/products/slider"
           )
         );
       }
@@ -140,13 +140,13 @@ const youtubeLink = req.body.youtubeLink || "";
     if (req.files?.blueImages) {
       for (const file of req.files.blueImages.slice(0, 5)) {
         blueImages.push(
-          await uploadToCloudinary(file, "creature_industry/subcategories/blue")
+          await uploadToCloudinary(file, "creature_industry/products/blue")
         );
       }
     }
 
     // ✅ Create SubCategory
-    const subcategory = await SubCategory.create({
+    const product = await Product.create({
       name: name.trim(),
       slug,
       category: categoryId,
@@ -173,13 +173,13 @@ const youtubeLink = req.body.youtubeLink || "";
     await emitDashboardUpdate();
     res.status(201).json({
       success: true,
-      subcategory,
+      product,
     });
   } catch (error) {
-    console.error("Create Subcategory Error:", error);
+    console.error("Create Product Error:", error);
     res.status(500).json({
       success: false,
-      message: "Failed to create subcategory",
+      message: "Failed to create product",
     });
   }
 };
@@ -187,9 +187,9 @@ const youtubeLink = req.body.youtubeLink || "";
 
 
 // GET /api/subcategories/groups
-export const getSubCategoryGroups = async (req, res) => {
+export const getProductGroups = async (req, res) => {
   try {
-    const groups = await SubCategory.distinct("groupName");
+    const groups = await Product.distinct("groupName");
     res.json(groups);   // ["gas","dosa","momo"]
   } catch (error) {
     console.error(error);
@@ -200,10 +200,10 @@ export const getSubCategoryGroups = async (req, res) => {
 
 
 /**
- * GET /api/subcategories?category=slugOrId
+ * GET /api/products?category=slugOrId
  * Admin + Frontend
  */
-export const getSubcategories = async (req, res) => {
+export const getProducts = async (req, res) => {
   try {
     const { category } = req.query;
 
@@ -229,7 +229,7 @@ export const getSubcategories = async (req, res) => {
       });
     }
 
-    const subcategories = await SubCategory.find({
+    const products = await Product.find({
       category: cat._id,
       isActive: true,
     })
@@ -246,23 +246,23 @@ export const getSubcategories = async (req, res) => {
         slug: cat.slug,
         image: cat.image,
       },
-      subcategories,
+      products,
     });
   } catch (error) {
-    console.error("Get Subcategories Error:", error);
+    console.error("Get Products Error:", error);
     res.status(500).json({
       success: false,
-      message: "Failed to fetch subcategories",
+      message: "Failed to fetch products",
     });
   }
 };
 
 /**
- * GET /api/subcategories
+ * GET /api/products
  * If category query param is provided, filter by category
- * Otherwise, return all subcategories
+ * Otherwise, return all products
  */
-export const getAllSubcategories = async (req, res) => {
+export const getAllProducts = async (req, res) => {
   try {
     const { category } = req.query;
 
@@ -283,54 +283,52 @@ export const getAllSubcategories = async (req, res) => {
       filter.category = cat._id;
     }
 
-    const subcategories = await SubCategory.find(filter)
+    const products = await Product.find(filter)
       .sort({ createdAt: -1 })
       .select("_id name slug image category priceRange features specifications usage callNumber whatsappNumber brochureUrl");
 
-    res.json({ success: true, subcategories });
+    res.json({ success: true, products });
   } catch (error) {
-    console.error("Get Subcategories Error:", error);
-    res.status(500).json({ success: false, message: "Failed to fetch subcategories" });
+    console.error("Get Products Error:", error);
+    res.status(500).json({ success: false, message: "Failed to fetch products" });
   }
 };
 
 // GET /api/subcategories/:slug
-export const getSingleSubcategory = async (req, res) => {
+export const getSingleProduct = async (req, res) => {
   try {
     const { slug } = req.params;
 
-    const subcategory = await SubCategory.findOne({
+    const product = await Product.findOne({
       slug,
       isActive: true,
     });
 
-    if (!subcategory) {
+    if (!product) {
       return res.status(404).json({
         success: false,
-        message: "SubCategory not found",
+        message: "Product not found",
       });
     }
 
     // ✅ SUCCESS RESPONSE
     return res.status(200).json({
       success: true,
-      subcategory,
+      product,
     });
 
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: "Failed to fetch subcategory",
+      message: "Failed to fetch product",
       error: error.message,
     });
   }
 };
 
 
-
-
 // Get related subcategories
-export const getRelatedSubcategories = async (req, res) => {
+export const getRelatedProducts = async (req, res) => {
   try {
     const { groupName, categoryId, currentId } = req.query;
     if (!groupName || !categoryId) {
@@ -340,7 +338,7 @@ export const getRelatedSubcategories = async (req, res) => {
       });
     }
 
-    const related = await SubCategory.find({
+    const related = await Product.find({
       groupName: groupName.toLowerCase(),
       category: new mongoose.Types.ObjectId(categoryId),
       _id: { $ne: new mongoose.Types.ObjectId(currentId) },
@@ -349,182 +347,20 @@ export const getRelatedSubcategories = async (req, res) => {
 
     return res.json({
       success: true,
-      subcategories: related,
+      products: related,
     });
   } catch (error) {
     console.error("RELATED ERROR ❌", error);
     res.status(500).json({
       success: false,
-      message: "Failed to fetch related subcategories",
+      message: "Failed to fetch related products",
       error: error.message,
     });
   }
 };
 
 
-// Update subcategory
-
-// export const updateSubcategory = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-
-//     const {
-//       name,
-//       groupName,
-//       isActive,
-//       priceRange,
-//       features,
-//       usage,
-//       description,
-//       specifications,
-//       callNumber,
-//       whatsappNumber,
-//       blueHeading,
-//       youtubeLink,
-//     } = req.body;
-
-//     // ===== VALIDATION =====
-//     if (!mongoose.Types.ObjectId.isValid(id)) {
-//       return res.status(400).json({
-//         success: false,
-//         message: "Invalid subcategory id",
-//       });
-//     }
-
-//     const subcategory = await SubCategory.findById(id);
-//     if (!subcategory) {
-//       return res.status(404).json({
-//         success: false,
-//         message: "Subcategory not found",
-//       });
-//     }
-
-//     const updateData = {};
-
-//     // ===== BASIC FIELDS =====
-//     if (name && name.trim()) {
-//       updateData.name = name.trim();
-//       updateData.slug = slugify(name, { lower: true, strict: true });
-//     }
-
-//     if (groupName && groupName.trim()) {
-//       updateData.groupName = groupName.trim().toLowerCase();
-//     }
-
-//     if (typeof isActive === "boolean") {
-//       updateData.isActive = isActive;
-//     }
-
-//     // ===== JSON FIELDS =====
-//     if (priceRange) updateData.priceRange = parseIfJson(priceRange);
-//     if (features) updateData.features = parseIfJson(features);
-//     if (usage) updateData.usage = parseIfJson(usage);
-//     if (description) updateData.description = parseIfJson(description);
-//     if (specifications)
-//       updateData.specifications = parseIfJson(specifications);
-
-//     // ===== CONTACT =====
-//     if (callNumber !== undefined) updateData.callNumber = callNumber;
-//     if (whatsappNumber !== undefined)
-//       updateData.whatsappNumber = whatsappNumber;
-
-//     // ===== MAIN IMAGE =====
-//     if (req.files?.image?.[0]) {
-//       updateData.image = await uploadToCloudinary(
-//         req.files.image[0],
-//         "creature_industry/subcategories"
-//       );
-//     }
-
-//     // ===== BROCHURE =====
-//     if (req.files?.brochure?.[0]) {
-//       updateData.brochureUrl = await uploadToCloudinary(
-//         req.files.brochure[0],
-//         "creature_industry/subcategories/brochures",
-//         "raw"
-//       );
-//     }
-
-//     // ===== SLIDER UPDATE =====
-//     if (
-//       req.files?.sliderImages ||
-//       youtubeLink !== undefined
-//     ) {
-//       let sliderImages = subcategory.slider?.images || [];
-
-//       if (req.files?.sliderImages) {
-//         sliderImages = [];
-//         for (const file of req.files.sliderImages.slice(0, 5)) {
-//           sliderImages.push(
-//             await uploadToCloudinary(
-//               file,
-//               "creature_industry/subcategories/slider"
-//             )
-//           );
-//         }
-//       }
-
-//       updateData.slider = {
-//         images: sliderImages,
-//         youtube: {
-         
-//           link:
-//             youtubeLink !== undefined
-//               ? youtubeLink
-//               : subcategory.slider?.youtube?.link || "",
-//         },
-//       };
-//     }
-
-//     // ===== BLUE SECTION UPDATE =====
-//     if (req.files?.blueImages || blueHeading !== undefined) {
-//       let blueImages = subcategory.blueSection?.images || [];
-
-//       if (req.files?.blueImages) {
-//         blueImages = [];
-//         for (const file of req.files.blueImages.slice(0, 5)) {
-//           blueImages.push(
-//             await uploadToCloudinary(
-//               file,
-//               "creature_industry/subcategories/blue"
-//             )
-//           );
-//         }
-//       }
-
-//       updateData.blueSection = {
-//         heading:
-//           blueHeading !== undefined
-//             ? blueHeading
-//             : subcategory.blueSection?.heading || "",
-//         images: blueImages,
-//       };
-//     }
-
-//     // ===== UPDATE =====
-//     const updatedSubcategory = await SubCategory.findByIdAndUpdate(
-//       id,
-//       updateData,
-//       { new: true }
-//     );
-
-//     res.json({
-//       success: true,
-//       subcategory: updatedSubcategory,
-//     });
-//   } catch (error) {
-//     console.error("Update Subcategory Error:", error);
-//     res.status(500).json({
-//       success: false,
-//       message: "Failed to update subcategory",
-//     });
-//   }
-// };
-
-
-
-
-export const updateSubcategory = async (req, res) => {
+export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -551,11 +387,11 @@ export const updateSubcategory = async (req, res) => {
       });
     }
 
-    const subcategory = await SubCategory.findById(id);
-    if (!subcategory) {
+    const product = await Product.findById(id);
+    if (!product) {
       return res.status(404).json({
         success: false,
-        message: "Subcategory not found",
+        message: "Product not found",
       });
     }
 
@@ -605,7 +441,7 @@ export const updateSubcategory = async (req, res) => {
     if (req.files?.image?.[0]) {
       updateData.image = await uploadToCloudinary(
         req.files.image[0],
-        "creature_industry/subcategories"
+        "creature_industry/products"
       );
     }
 
@@ -613,7 +449,7 @@ export const updateSubcategory = async (req, res) => {
     if (req.files?.brochure?.[0]) {
       updateData.brochureUrl = await uploadToCloudinary(
         req.files.brochure[0],
-        "creature_industry/subcategories/brochures",
+        "creature_industry/products/brochures",
         "raw"
       );
     }
@@ -624,7 +460,7 @@ export const updateSubcategory = async (req, res) => {
       typeof youtubeLink === "string" && youtubeLink.trim().length > 0;
 
     if (hasNewSliderImages || hasYoutubeLink) {
-      let sliderImages = subcategory.slider?.images || [];
+      let sliderImages = product.slider?.images || [];
 
       if (hasNewSliderImages) {
         sliderImages = [];
@@ -632,7 +468,7 @@ export const updateSubcategory = async (req, res) => {
           sliderImages.push(
             await uploadToCloudinary(
               file,
-              "creature_industry/subcategories/slider"
+              "creature_industry/products/slider"
             )
           );
         }
@@ -643,7 +479,7 @@ export const updateSubcategory = async (req, res) => {
         youtube: {
           link: hasYoutubeLink
             ? youtubeLink.trim()
-            : subcategory.slider?.youtube?.link || "",
+            : product.slider?.youtube?.link || "",
         },
       };
     }
@@ -654,7 +490,7 @@ export const updateSubcategory = async (req, res) => {
       typeof blueHeading === "string" && blueHeading.trim().length > 0;
 
     if (hasBlueImages || hasBlueHeading) {
-      let blueImages = subcategory.blueSection?.images || [];
+      let blueImages = product.blueSection?.images || [];
 
       if (hasBlueImages) {
         blueImages = [];
@@ -662,7 +498,7 @@ export const updateSubcategory = async (req, res) => {
           blueImages.push(
             await uploadToCloudinary(
               file,
-              "creature_industry/subcategories/blue"
+              "creature_industry/products/blue"
             )
           );
         }
@@ -671,7 +507,7 @@ export const updateSubcategory = async (req, res) => {
       updateData.blueSection = {
         heading: hasBlueHeading
           ? blueHeading.trim()
-          : subcategory.blueSection?.heading || "",
+          : product.blueSection?.heading || "",
         images: blueImages,
       };
     }
@@ -679,7 +515,7 @@ export const updateSubcategory = async (req, res) => {
     // ===== FAIL-SAFE UPDATE =====
     updateData.updatedAt = new Date();
 
-    const updatedSubcategory = await SubCategory.findByIdAndUpdate(
+    const updatedProduct = await Product.findByIdAndUpdate(
       id,
       updateData,
       { new: true }
@@ -689,40 +525,40 @@ export const updateSubcategory = async (req, res) => {
 
     res.json({
       success: true,
-      subcategory: updatedSubcategory,
+      product: updatedProduct,
     });
   } catch (error) {
-    console.error("Update Subcategory Error:", error);
+    console.error("Update Product Error:", error);
     res.status(500).json({
       success: false,
-      message: "Failed to update subcategory",
+      message: "Failed to update Product",
     });
   }
 };
 
 /**
- * DELETE /api/subcategories/:id
+ * DELETE /api/Products/:id
  * Admin: Soft delete
  */
-export const deleteSubcategory = async (req, res) => {
+export const deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({
         success: false,
-        message: "Invalid subcategory id",
+        message: "Invalid product id",
       });
     }
 
-    const subcategory = 
-    await SubCategory.findByIdAndDelete(req.params.id);
+    const product = 
+    await Product.findByIdAndDelete(req.params.id);
 
 
-    if (!subcategory) {
+    if (!product) {
       return res.status(404).json({
         success: false,
-        message: "Subcategory not found",
+        message: "Product not found",
       });
     }
 
@@ -730,33 +566,33 @@ export const deleteSubcategory = async (req, res) => {
     
     res.json({
       success: true,
-      message: "Subcategory disabled successfully",
+      message: "Product disabled successfully",
     });
   } catch (error) {
-    console.error("Delete Subcategory Error:", error);
+    console.error("Delete Product Error:", error);
     res.status(500).json({
       success: false,
-      message: "Failed to delete subcategory",
+      message: "Failed to delete product",
     });
   }
 };
 
 
 // Search subcategories
-export const searchSubcategories =  async (req, res) => {
+export const searchProducts =  async (req, res) => {
   try {
     const { q } = req.query;
 
     if(!q) {
       return res.json({
         success: true,
-        subcategories: [],
+        products: [],
 
 
       });
     }
 
-    const subcategories = await SubCategory.find({
+    const products = await Product.find({
       name: { $regex: q, $options: "i"},
       isActive: true,
     })
@@ -765,7 +601,7 @@ export const searchSubcategories =  async (req, res) => {
 
     res.json({
       success: true,
-      subcategories,
+      products,
     });
   } catch(error) {
     res.status(500).json({

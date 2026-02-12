@@ -19,29 +19,29 @@ const TrendingProducts = () => {
 
   // ✅ Fetch homepage top SUBCATEGORIES
   useEffect(() => {
-    const fetchTopSubCategories = async () => {
+    const fetchTopProducts = async () => {
       try {
-        const res = await axios.get("/home-top-subcategories");
+        const res = await axios.get("/home-top-products");
 
         // 🔥 extract actual subcategories
         const mappedItems =
           res.data?.data
-            ?.filter(item => item.subCategory)
+            ?.filter(item => item.product)
             ?.map(item => ({
-              ...item.subCategory,
+              ...item.product,
               topId: item._id,
             })) || [];
 
         setItems(mappedItems);
       } catch (err) {
-        console.error("Failed to fetch homepage top subcategories:", err);
+        console.error("Failed to fetch homepage top products:", err);
         toast.error("Failed to load top categories");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchTopSubCategories();
+    fetchTopProducts();
   }, []);
 
   // max 3 rows, 8 items per row
@@ -62,8 +62,8 @@ const TrendingProducts = () => {
           <ProductSlider
             key={index}
             products={row}
-            onProductClick={(subCategory) =>
-              navigate(`/subcategory/${subCategory.slug || subCategory._id}`)
+            onProductClick={(pro) =>
+              navigate(`/products/${pro.slug || pro._id}`)
             }
           />
         ))}

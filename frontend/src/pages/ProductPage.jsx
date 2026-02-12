@@ -1,28 +1,28 @@
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { getSubCategories } from "../api/subCategory.api";
-import SubCategoryCard from "../components/category/SubCategoryCard";
+import { getProducts } from "../api/product.api";
+import ProductCard from "../components/category/ProductCard";
 
 
-const SubCategoryPage = () => {
+const ProductPage = () => {
   const { slug } = useParams();
   const [categoryImage, setCategoryImage] = useState("");
   const [categoryName, setCategoryName] = useState("");
-  const [subcategories, setSubcategories] = useState([]);
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
 
       try {
-        const res = await getSubCategories(slug);
+        const res = await getProducts(slug);
         // 👇 IMPORTANT
         setCategoryImage(res.category?.image?.url || "");
         setCategoryName(res.category?.name || "");
-        setSubcategories(res.subcategories || []);
+        setProducts(res.products || []);
 
       } catch (err) {
-        console.error("Failed to load subcategories", err);
+        console.error("Failed to load products", err);
       } finally {
         setLoading(false);
       }
@@ -55,14 +55,14 @@ const SubCategoryPage = () => {
         </div>
       )}
 
-      {/* SUBCATEGORIES */}
-      {subcategories.length === 0 ? (
-        <p>No subcategories found</p>
+      {/* products */}
+      {products.length === 0 ? (
+        <p>No products found</p>
       ) : (
         
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {subcategories.map((sub) => (
-            <SubCategoryCard key={sub._id} sub={sub} />
+          {products.map((pro) => (
+            <ProductCard key={pro._id} pro={pro} />
           ))}
         </div>
       )}
@@ -71,4 +71,4 @@ const SubCategoryPage = () => {
   );
 };
 
-export default SubCategoryPage;
+export default ProductPage;
