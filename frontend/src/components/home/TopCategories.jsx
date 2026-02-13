@@ -64,7 +64,7 @@ const TopCategories = () => {
   {/* Cards */}
   <div
     className="
-      max-w-6xl mx-auto px-4
+      max-w-7xl mx-auto px-4
       grid grid-cols-3 gap-2
       md:flex md:gap-4 md:overflow-x-auto md:no-scrollbar
     "

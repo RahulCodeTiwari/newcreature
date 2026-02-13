@@ -7,7 +7,7 @@ import InquirySection from "../components/home/InquirySection";
 import PreviousDetails from "../components/home/previousDetails";
 import DOMPurify from "dompurify";
 import { Link } from "react-router-dom";
-
+import { setSEO } from "../utils/seo";
 
 /* 🔹 YOUTUBE HELPER */
 const getYouTubeVideoId = (url) => {
@@ -65,7 +65,20 @@ const slides = [
       .finally(() => setLoading(false));
   }, [slug]);
 
+useEffect(() => {
+  if (!product) return;
 
+  setSEO({
+    title: product.metaTitle || product.name,
+    description:
+      product.metaDescription ||
+      product.description.slice(0, 160),
+    canonical:
+      product.canonicalUrl ||
+      `${window.location.origin}/product/${product.slug}`,
+  });
+
+}, [product]);
   
   /* 🔹 FETCH RELATED */
 useEffect(() => {
@@ -227,7 +240,7 @@ useEffect(() => {
             hover:opacity-90 transition"
           >
             <img
-              src="../assets/icons/callnow.png"
+              src="/assets/icons/callnow.png"
               alt="Call"
               className="w-4 h-5"
             />
@@ -246,7 +259,7 @@ useEffect(() => {
             hover:bg-green-700 transition"
           >
             <img
-              src="../assets/icons/whatsapp.png"
+              src="/assets/icons/whatsapp.png"
               alt="WhatsApp"
               className="w-5 h-5"
             />
@@ -265,7 +278,7 @@ useEffect(() => {
             hover:opacity-90 transition"
           >
             <img
-              src="../assets/icons/dounloadbrochure.png"
+              src="/assets/icons/dounloadbrochure.png"
               alt="Brochure"
               className="w-5 h-5"
             />

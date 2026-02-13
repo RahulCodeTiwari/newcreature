@@ -4,7 +4,6 @@ import {
   updateProduct,
   deleteProduct,
   getProducts,
-
   getAllProducts,
   getRelatedProducts,
   getProductGroups,
@@ -19,19 +18,19 @@ const router = express.Router();
 
 /* PUBLIC ROUTES */
 
-// 1️⃣ Get subcategories by category query (?category=slugOrId)
+// Get products by category query (?category=slugOrId)
 router.get("/", getProducts);
 
 router.get("/groups", getProductGroups);
 
-// 2️⃣ Get single subcategory by slug (ALWAYS LAST to prevent conflicts)
+// Get single product by slug (ALWAYS LAST to prevent conflicts)
 router.get("/related", getRelatedProducts);
 router.get("/search", searchProducts);
 router.get("/:slug", getSingleProduct);
 
 
 
-// 3️⃣ Optional: get all subcategories (admin/public)
+// Optional: get all subcategories (admin/public)
 router.get("/all", getAllProducts);
 
 /* ADMIN ROUTES */

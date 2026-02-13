@@ -3,8 +3,17 @@ import React from 'react'
 const WhyChooseUs = () => {
   return (
 <section className="max-w-7xl mx-auto px-4 ">
-    <div className="text-xl text-center mb-4 font-bold">
-            <h3>Why Choose Us ?</h3>
+  <div className="text-2xl text-center mb-4 font-semibold">
+
+      <h2>Our Certification</h2>
+  </div>
+          <img
+            src="/homepage/certification.png"
+            alt="img1"
+            className="w-full  object-cover rounded"
+          />
+    <div className="text-2xl text-center mb-4 mt-6 font-semibold">
+            <h2>Why Choose Us ?</h2>
           </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <img

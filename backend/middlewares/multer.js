@@ -17,7 +17,6 @@ const fileFilter = (req, file, cb) => {
   "video/mp4", 
 ];
 
-
   if (allowedMimeTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {

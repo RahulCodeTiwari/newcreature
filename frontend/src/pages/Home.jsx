@@ -14,7 +14,7 @@ const Home = () => {
       <HeroSection />
       <TopCategories />
       <TrendingProducts />
-       <InquirySection />
+      <InquirySection />
       <WhyChooseUs />
       <ReviewSlider />
       <FAQSection />

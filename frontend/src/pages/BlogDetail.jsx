@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import DOMPurify from "dompurify";
+import { setSEO } from "../utils/seo";
 
 const BlogDetail = () => {
   const { slug } = useParams();
@@ -17,6 +18,23 @@ const BlogDetail = () => {
       .catch(console.error);
   }, [slug]);
 
+  useEffect(() => {
+    if (!blog) return;
+  
+    setSEO({
+      title: blog.metaTitle || blog.title || "",
+  
+      description:
+        blog.metaDescription?.slice(0, 160) ||
+        blog.excerpt?.slice(0, 160) ||
+        "",
+  
+      canonical:
+        blog.canonicalUrl ||
+        `${window.location.origin}/blog/${blog.slug}`,
+    });
+  }, [blog]);
+  
   if (!blog) {
     return (
       <p className="text-center mt-20 text-lg">

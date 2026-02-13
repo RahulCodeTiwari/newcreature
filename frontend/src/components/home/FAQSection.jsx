@@ -28,7 +28,7 @@ const FAQSection = () => {
   const [open, setOpen] = useState(0);
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-2 bg-gray-50">
+    <section className="max-w-7xl mx-auto px-4 py-2 bg-gray-50">
       <h2 className="text-center text-lg font-bold mb-4">
         FAQs
       </h2>

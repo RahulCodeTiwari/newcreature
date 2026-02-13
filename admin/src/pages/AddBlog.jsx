@@ -10,14 +10,21 @@ const AddBlog = () => {
   const { adminToken } = useContext(AuthContext);
 
   const [title, setTitle] = useState("");
+  const [metaTitle, setMetaTitle] = useState("");
+  const [metaDescription, setMetaDescription] = useState("");
+  const [canonicalUrl, setCanonicalUrl] = useState("");
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [blogs, setBlogs] = useState([]);
   const [editingBlogId, setEditingBlogId] = useState(null);
+  
 
   const handleEdit = (blog) => {
     setEditingBlogId(blog._id);
     setTitle(blog.title);
+    setMetaTitle(blog.metaTitle);
+    setMetaDescription(blog.metaDescription);
+    setCanonicalUrl(blog.canonicalUrl);
     setSections(blog.sections);
     setImage(null);
   };
@@ -63,6 +70,9 @@ const AddBlog = () => {
 
       const formData = new FormData();
       formData.append("title", title.trim());
+      formData.append("metaTitle", metaTitle.trim());
+      formData.append("metaDescription", metaDescription.trim());
+      formData.append("canonicalUrl", canonicalUrl);
       formData.append("sections", JSON.stringify(sections));
 
       if (image) {
@@ -98,6 +108,9 @@ const AddBlog = () => {
 
       // RESET
       setTitle("");
+      setMetaTitle("");
+      setMetaDescription("");
+      setCanonicalUrl("");
       setSections([{ heading: "", description: "" }]);
       setImage(null);
       setEditingBlogId(null);
@@ -171,6 +184,33 @@ useEffect(() => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
+
+      
+<h3>seo update</h3>
+      <input
+  type="text"
+  placeholder="Meta Title (Optional)"
+  value={metaTitle}
+  onChange={(e) => setMetaTitle(e.target.value)}
+  className="border p-2 w-full mb-3"
+/>
+
+<textarea
+  placeholder="Meta Description (150-160 characters recommended)"
+  value={metaDescription}
+  onChange={(e) => setMetaDescription(e.target.value)}
+  className="border p-2 w-full mb-3"
+  rows={3}
+/>
+
+<input
+  type="text"
+  placeholder="Canonical URL (Auto generated if empty)"
+  value={canonicalUrl}
+  onChange={(e) => setCanonicalUrl(e.target.value)}
+  className="border p-2 w-full mb-3"
+/>
+
 
       {/* Sections */}
       {sections.map((section, index) => (

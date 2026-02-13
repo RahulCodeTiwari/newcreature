@@ -58,7 +58,7 @@ const handleDownload = () => {
                   hover:scale-110 transition"
                 >
                   <img
-                    src="../assets/ui/icons/instagram-icon.png"
+                    src="/assets/ui/icons/instagram-icon.png"
                     alt="Instagram"
                     className="w-10 h-10"
                   />

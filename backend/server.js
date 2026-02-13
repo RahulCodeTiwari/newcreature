@@ -82,16 +82,12 @@ app.use("/api/contacts", contactRoutes);
 app.use("/api/blogs", blogRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 
-// --------------------
 // Test Route
-// --------------------
 app.get("/", (req, res) => {
   res.send("API Running...");
 });
 
-// --------------------
 // Start Server (IMPORTANT)
-// --------------------
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Server running on port ${PORT}`);

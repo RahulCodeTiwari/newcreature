@@ -65,7 +65,7 @@ const navigate = useNavigate();
             hover:opacity-90 transition"
           >
             <img
-              src="../assets/icons/callnow.png"
+              src="/assets/icons/callnow.png"
               alt="Call"
               className="w-4 h-5"
             />
@@ -84,7 +84,7 @@ const navigate = useNavigate();
             hover:bg-green-700 transition"
           >
             <img
-              src="../assets/icons/whatsapp.png"
+              src="/assets/icons/whatsapp.png"
               alt="WhatsApp"
               className="w-5 h-5"
             />
@@ -103,7 +103,7 @@ const navigate = useNavigate();
             hover:opacity-90 transition"
           >
             <img
-              src="../assets/icons/dounloadbrochure.png"
+              src="/assets/icons/dounloadbrochure.png"
               alt="Brochure"
               className="w-5 h-5"
             />

@@ -4,6 +4,7 @@ import { getProducts } from "../api/product.api";
 import ProductCard from "../components/category/ProductCard";
 
 
+
 const ProductPage = () => {
   const { slug } = useParams();
   const [categoryImage, setCategoryImage] = useState("");

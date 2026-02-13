@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { setSEO } from "../utils/seo";
 
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
@@ -13,6 +14,7 @@ const Blog = () => {
       })
       .catch(console.error);
   }, []);
+
 
   return (
     <div className="max-w-6xl mx-auto p-4">

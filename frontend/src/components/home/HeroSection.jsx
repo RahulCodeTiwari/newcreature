@@ -22,7 +22,7 @@ const HeroSection = () => {
   return (
 
   <section className="md:mt-10  w-full">
-    <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-2 p-0">
+    <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-2 p-0">
 
       {/* SLIDER (LEFT) */}
       <div className="relative overflow-hidden leading-none md:col-span-2 h-full">

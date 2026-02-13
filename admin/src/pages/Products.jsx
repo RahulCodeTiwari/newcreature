@@ -37,6 +37,10 @@ const Products = () => {
 
   // Specifications
   const [specifications, setSpecifications] = useState([{ key: "", value: "" }]);
+// seo 
+  const [metaTitle, setMetaTitle] = useState("");
+  const [metaDescription, setMetaDescription] = useState("");
+  const [canonicalUrl, setCanonicalUrl] = useState("");
 
 // ===== UPDATE STATES =====
 const [isEditing, setIsEditing] = useState(false);
@@ -58,6 +62,11 @@ const [editYoutubeLink, setEditYoutubeLink] = useState("");
 
 const [editBlueHeading, setEditBlueHeading] = useState("");
 const [editSpecifications, setEditSpecifications] = useState([{ key: "", value: ""}]);
+// Edit Seo
+  const [editMetaTitle, setEditMetaTitle] = useState("");
+  const [editMetaDescription, setEditMetaDescription] = useState("");
+  const [editCanonicalUrl, setEditCanonicalUrl] = useState("");
+
 
 
 
@@ -214,9 +223,7 @@ const fetchGroupNames = async () => {
   try {
     const res = await axios.get("/products/groups", {
       headers: { Authorization: `Bearer ${adminToken}` },
-    });
-
-   
+    });  
 
     if (Array.isArray(res.data)) {
       setGroupNames(res.data);
@@ -226,7 +233,6 @@ const fetchGroupNames = async () => {
     setGroupNames([]);
   }
 };
-
 
 const handleAdd = async (e) => {
   e?.preventDefault();
@@ -273,6 +279,11 @@ const handleAdd = async (e) => {
     if (description?.length) {
       formData.append("description", JSON.stringify(description));
     }
+// Seo
+
+    formData.append("metaTitle", metaTitle);
+    formData.append("metaDescription", metaDescription);  
+    formData.append("canonicalUrl", canonicalUrl);
 
     // ===== CONTACT =====
     if (callNumber) formData.append("callNumber", callNumber);
@@ -326,6 +337,9 @@ const handleEditClick = (pro) => {
   setEditFeatures(pro.features || "");
   setEditUsage(pro.usage || "");
   setEditDescription(pro.description || []);
+  setEditMetaTitle(pro.metaTitle || "");
+  setEditMetaDescription(pro.metaDescription || "");
+  setEditCanonicalUrl(pro.canonicalUrl || "");
   setEditCallNumber(pro.callNumber || "");
   setEditWhatsappNumber(pro.whatsappNumber || "");
 
@@ -342,7 +356,6 @@ const handleEditClick = (pro) => {
     : [{ key: "", value: "" }]
 );
 
-
   setEditSliderImages([]); // new uploads only
   setEditBlueImages([]);
 };
@@ -350,6 +363,11 @@ const handleEditClick = (pro) => {
 
 
 const handleUpdate = async () => {
+  console.log("Sending SEO:",
+  metaTitle,
+  metaDescription,
+  canonicalUrl
+);
   try {
     setLoading(true);
 
@@ -371,6 +389,10 @@ const handleUpdate = async () => {
 
     formData.append("usage", editUsage);
     formData.append("description", JSON.stringify(editDescription));
+    formData.append("metaTitle", editMetaTitle);
+    formData.append("metaDescription", editMetaDescription);
+    formData.append("canonicalUrl", editCanonicalUrl);
+
     formData.append("callNumber", editCallNumber);
     formData.append("whatsappNumber", editWhatsappNumber);
    
@@ -532,6 +554,31 @@ const handleUpdate = async () => {
           onChange={(e) => setEditUsage(e.target.value)}
           className="border p-2 rounded w-full"
         />
+
+<h3 className="font-bold mt-6">SEO Settings</h3>
+
+<input
+  type="text"
+  placeholder="Meta Title"
+  value={editMetaTitle}
+  onChange={(e) => setEditMetaTitle(e.target.value)}
+  className="border p-2 w-full mb-3"
+/>
+
+<textarea
+  placeholder="Meta Description"
+  value={editMetaDescription}
+  onChange={(e) => setEditMetaDescription(e.target.value)}
+  className="border p-2 w-full mb-3"
+/>
+
+<input
+  type="text"
+  placeholder="Canonical URL (Optional)"
+  value={editCanonicalUrl}
+  onChange={(e) => setEditCanonicalUrl(e.target.value)}
+  className="border p-2 w-full"
+/>
 
         {/* CONTACT */}
         <input
@@ -803,6 +850,32 @@ const handleUpdate = async () => {
           onChange={(e) => setUsage(e.target.value)}
           className="border p-2 rounded w-full"
         />
+
+        <h3 className="font-bold mt-6">SEO Settings</h3>
+
+<input
+  type="text"
+  placeholder="Meta Title"
+  value={metaTitle}
+  onChange={(e) => setMetaTitle(e.target.value)}
+  className="border p-2 w-full mb-3"
+/>
+
+<textarea
+  placeholder="Meta Description"
+  value={metaDescription}
+  onChange={(e) => setMetaDescription(e.target.value)}
+  className="border p-2 w-full mb-3"
+/>
+
+<input
+  type="text"
+  placeholder="Canonical URL (Optional)"
+  value={canonicalUrl}
+  onChange={(e) => setCanonicalUrl(e.target.value)}
+  className="border p-2 w-full"
+/>
+
 
          <input
           type="tel"

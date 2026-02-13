@@ -37,7 +37,14 @@ const uploadBlogImage = async (file) => {
 // Create Blog
 export const createBlog = async ( req, res) => {
   try {
-    const { title, sections, excert } = req.body;
+    const {
+      title,
+      sections,
+      excerpt,
+      metaTitle,
+      metaDescription,
+      canonicalUrl,
+    } = req.body;
 
     if(!title?.trim()){
       return res.status(400).json({
@@ -89,13 +96,32 @@ export const createBlog = async ( req, res) => {
       featuredImageUrl = await uploadBlogImage(req.file);
      }
 
+       // ✅ SEO FALLBACK LOGIC
+    const finalMetaTitle = metaTitle?.trim() || title.trim();
+
+    const finalMetaDescription =
+      metaDescription?.trim() ||
+      excerpt?.trim() ||
+      parsedSections[0]?.description?.slice(0, 160);
+
+    const finalCanonicalUrl =
+      canonicalUrl?.trim() ||
+      `${process.env.FRONTEND_URL}/blog/${slug}/`;
+
+
      const blog = await Blog.create({
       title: title.trim(),
     slug,
   sections: parsedSections,
-  excerpt: excert?.trim() || "",
+  excerpt: excerpt?.trim() || "",
   featuredImage: featuredImageUrl,
   status: "published",
+
+   // ✅ SEO Fields
+      metaTitle: finalMetaTitle,
+      metaDescription: finalMetaDescription,
+      canonicalUrl: finalCanonicalUrl,
+
      });
      await emitDashboardUpdate();
 
@@ -116,7 +142,14 @@ export const createBlog = async ( req, res) => {
 // Update Blog
 export const updateBlog = async (req, res) => {
   try {
-    const { title, sections, excert } = req.body;
+      const {
+      title,
+      sections,
+      excerpt,
+      metaTitle,
+      metaDescription,
+      canonicalUrl,
+    } = req.body;
 
     const {id} = req.params;
 
@@ -167,8 +200,8 @@ export const updateBlog = async (req, res) => {
         blog.sections = parsedSections;
       }
       // Excerpt
-      if(excert !== undefined) {
-        blog.excert = excert.trim();
+      if(excerpt !== undefined) {
+        blog.excerpt = excerpt.trim();
       }
 
       // Featured image
@@ -176,6 +209,36 @@ export const updateBlog = async (req, res) => {
         const featuredImageUrl = await uploadBlogImage(req.file);;
         blog.featuredImage = featuredImageUrl;
       }
+
+          // =========================
+    // SEO UPDATE LOGIC
+    // =========================
+
+    // Meta Title
+    if (metaTitle !== undefined) {
+      blog.metaTitle = metaTitle.trim() || blog.title;
+    }
+
+    // Meta Description
+    if (metaDescription !== undefined) {
+      blog.metaDescription =
+        metaDescription.trim() ||
+        blog.excerpt ||
+        blog.sections[0]?.description?.slice(0, 160);
+    }
+
+    // Canonical URL
+    if (canonicalUrl !== undefined) {
+      blog.canonicalUrl =
+        canonicalUrl.trim() ||
+        `${process.env.FRONTEND_URL}/blog/${blog.slug}/`;
+    }
+
+    // If slug changed and canonical was auto-generated before
+    if (!canonicalUrl && title) {
+      blog.canonicalUrl = `${process.env.FRONTEND_URL}/blog/${blog.slug}/`;
+    }
+
       await blog.save();
 
       await emitDashboardUpdate();

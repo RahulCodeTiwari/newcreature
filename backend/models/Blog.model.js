@@ -7,6 +7,12 @@ const blogSchema = new mongoose.Schema(
     excerpt: { type: String },
     featuredImage: { type: String },
 
+       // ✅ SEO Fields
+      // ✅ SEO Fields
+    metaTitle: { type: String },
+    metaDescription: { type: String },
+    canonicalUrl: { type: String },
+
     sections: [
       {
         heading: { type: String, required: true },

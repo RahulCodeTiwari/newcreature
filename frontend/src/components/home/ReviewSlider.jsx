@@ -118,11 +118,11 @@ useEffect(() => {
   return (
     <section className="px-4 py-2 bg-white">
 
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-7xl mx-auto">
             <hr className="mt-8 text-sky-300"/>
 
             {/* heading */}
-            <h2 className="text-xl  text-center mb-2 mt-4 text-black">
+            <h2 className="text-2xl  text-center mb-2 mt-4 font-semibold">
               Our Client Reviews
             </h2>
 
@@ -224,10 +224,10 @@ useEffect(() => {
         >
           <div className="flex items-center gap-4 mb-4 mt-1 cursor-pointer text-center ">
             <img
-  src="/logocreature.png"
-  alt="logo"
-  className="w-14 h-14 md:w-18 md:h-18 rounded-full border-2 border-blue-600 object-contain"
-/>
+              src="/logocreature.png"
+              alt="logo"
+              className="w-14 h-14 md:w-18 md:h-18 rounded-full border-2 border-blue-600 object-contain"
+            />
 
 
             <div>
@@ -254,19 +254,19 @@ useEffect(() => {
 
 
 
-<div>
-      <a
-        href="https://www.google.com/search?gs_ssp=eJzj4tVP1zc0LK6IjzfPSCs2YLRSNagwtrRMSkszsjQ3MTMzN041tTKoMDMzTrJMTU41NDc0MTQ3T_QSTC5KTSwpLUpVyMxLKS0uKaoEAACEFh8&q=creature+industry&rlz=1C1GGRV_enIN1191IN1191&oq=&gs_lcrp=EgZjaHJvbWUqDwgBEC4YJxivARjHARjqAjIJCAAQIxgnGOoCMg8IARAuGCcYrwEYxwEY6gIyCQgCECMYJxjqAjIJCAMQIxgnGOoCMgkIBBAjGCcY6gIyDwgFEC4YJxjHARjqAhjRAzIJCAYQIxgnGOoCMg8IBxAuGCcYxwEY6gIY0QMyFwgIEAAYQhhDGLQCGOoCGIAEGIoFGOcGMhcICRAAGEIYQxi0AhjqAhiABBiKBRjnBjIXCAoQABhCGEMYtAIY6gIYgAQYigUY5wYyFwgLEAAYQhhDGLQCGOoCGIAEGIoFGOcG0gEJMjc1N2owajE1qAIMsAIB8QX8hSv29OlhZg&sourceid=chrome&ie=UTF-8#lrd=0x399bff29746673e5:0x663b9ece1714177a,1,,,,"
-        rel="noopener noreferrer"
-        className="block"
-      >
-          
-      <div className="relative overflow-hidden  max-w-5xl mx-auto">
-      <div
-        className="flex transition-transform duration-700"
-        style={{
-  transform: `translateX(-${current * 100}%)`,
-}}
+        <div>
+              <a
+                href="https://www.google.com/search?gs_ssp=eJzj4tVP1zc0LK6IjzfPSCs2YLRSNagwtrRMSkszsjQ3MTMzN041tTKoMDMzTrJMTU41NDc0MTQ3T_QSTC5KTSwpLUpVyMxLKS0uKaoEAACEFh8&q=creature+industry&rlz=1C1GGRV_enIN1191IN1191&oq=&gs_lcrp=EgZjaHJvbWUqDwgBEC4YJxivARjHARjqAjIJCAAQIxgnGOoCMg8IARAuGCcYrwEYxwEY6gIyCQgCECMYJxjqAjIJCAMQIxgnGOoCMgkIBBAjGCcY6gIyDwgFEC4YJxjHARjqAhjRAzIJCAYQIxgnGOoCMg8IBxAuGCcYxwEY6gIY0QMyFwgIEAAYQhhDGLQCGOoCGIAEGIoFGOcGMhcICRAAGEIYQxi0AhjqAhiABBiKBRjnBjIXCAoQABhCGEMYtAIY6gIYgAQYigUY5wYyFwgLEAAYQhhDGLQCGOoCGIAEGIoFGOcG0gEJMjc1N2owajE1qAIMsAIB8QX8hSv29OlhZg&sourceid=chrome&ie=UTF-8#lrd=0x399bff29746673e5:0x663b9ece1714177a,1,,,,"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                  
+              <div className="relative overflow-hidden  max-w-5xl mx-auto">
+              <div
+                className="flex transition-transform duration-700"
+                style={{
+          transform: `translateX(-${current * 100}%)`,
+        }}
 
       >
         {reviews.map((review, index) => (

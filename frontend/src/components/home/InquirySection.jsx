@@ -54,7 +54,7 @@ const InquirySection = () => {
     <section className="px-4 py-4 bg-white">
       <div className="flex justify-center">
         <div
-          className="w-full max-w-6xl bg-[rgb(227,229,238)] rounded-3xl 
+          className="w-full max-w-7xl bg-[rgb(227,229,238)] rounded-3xl 
           p-4 flex flex-col items-center text-center
           md:flex-row md:items-start md:text-left
           md:p-10 md:gap-20"

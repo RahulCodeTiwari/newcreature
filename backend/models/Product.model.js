@@ -38,6 +38,11 @@ const productSchema = new mongoose.Schema(
       default: null,
     },
 
+      // ✅ SEO Fields
+    metaTitle: { type: String },
+    metaDescription: { type: String },
+    canonicalUrl: { type: String },
+
     slider: {
       images: {
         type: [String],

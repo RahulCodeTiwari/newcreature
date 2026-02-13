@@ -46,6 +46,11 @@ export const createProduct = async (req, res) => {
       callNumber,
       whatsappNumber,
       blueHeading,
+
+      // Seo Fields
+      metaTitle,
+      metaDescription,
+      canonicalUrl,
     } = req.body;
 
 
@@ -145,6 +150,17 @@ const youtubeLink = req.body.youtubeLink || "";
       }
     }
 
+    // SEO FallBack Logic
+
+    const finalMetaTitle = metaTitle?.trim() || name.trim();
+
+    const finalMetaDescription = metaDescription?.trim() ||
+    (Array.isArray(parsedDescription) && parsedDescription.length > 0
+    ? parsedDescription[0]?.description?.slice(0, 160) : "");
+
+    const finalCanonicalUrl = canonicalUrl?.trim() ||
+    `${process.env.FRONTEND_URL}/product/${slug}/`;
+
     // ✅ Create SubCategory
     const product = await Product.create({
       name: name.trim(),
@@ -168,6 +184,11 @@ const youtubeLink = req.body.youtubeLink || "";
           },
 
       blueSection: { heading: blueHeading || "", images: blueImages },
+
+      // Seo Fields
+      metaTitle: finalMetaTitle,
+      metaDescription: finalMetaDescription,
+      canonicalUrl: finalCanonicalUrl,
     });
 
     await emitDashboardUpdate();
@@ -235,8 +256,8 @@ export const getProducts = async (req, res) => {
     })
       .sort({ createdAt: -1 })
       .select(
-        "_id name slug image category priceRange features specifications usage description callNumber whatsappNumber brochureUrl"
-      );
+  "_id name slug image category priceRange features specifications usage description callNumber whatsappNumber brochureUrl metaTitle metaDescription canonicalUrl"
+);
 
     res.json({
       success: true,
@@ -359,7 +380,7 @@ export const getRelatedProducts = async (req, res) => {
   }
 };
 
-
+// Update Product
 export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
@@ -377,6 +398,11 @@ export const updateProduct = async (req, res) => {
       whatsappNumber,
       blueHeading,
       youtubeLink,
+
+       // ✅ NEW SEO FIELDS
+      metaTitle,
+      metaDescription,
+      canonicalUrl,
     } = req.body;
 
     // ===== VALIDATION =====
@@ -512,20 +538,34 @@ export const updateProduct = async (req, res) => {
       };
     }
 
-    // ===== FAIL-SAFE UPDATE =====
-    updateData.updatedAt = new Date();
+        // ==========================
+    // ✅ SEO LOGIC (NEW)
+    // ==========================
 
-    const updatedProduct = await Product.findByIdAndUpdate(
-      id,
-      updateData,
-      { new: true }
-    );
+const finalName = updateData.name || product.name;
+const finalSlug = updateData.slug || product.slug;
+
+if (metaTitle !== undefined) {
+  updateData.metaTitle = metaTitle.trim() || finalName;
+}
+
+if (metaDescription !== undefined) {
+  updateData.metaDescription =
+    metaDescription.trim() ||
+    `Buy ${finalName} at best price. Contact us today for details.`;
+}
+
+if (canonicalUrl !== undefined) {
+  updateData.canonicalUrl =
+    canonicalUrl.trim() ||
+    `${process.env.FRONTEND_URL}/product/${finalSlug}/`;
+}
 
     await emitDashboardUpdate();
 
     res.json({
       success: true,
-      product: updatedProduct,
+      product: updateProduct,
     });
   } catch (error) {
     console.error("Update Product Error:", error);
