@@ -561,11 +561,17 @@ if (canonicalUrl !== undefined) {
     `${process.env.FRONTEND_URL}/product/${finalSlug}/`;
 }
 
+const updatedProduct = await Product.findByIdAndUpdate(
+  id,
+  updateData,
+  { new: true }
+);
+
     await emitDashboardUpdate();
 
     res.json({
       success: true,
-      product: updateProduct,
+      product: updatedProduct,
     });
   } catch (error) {
     console.error("Update Product Error:", error);

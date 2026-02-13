@@ -32,7 +32,7 @@ const SearchBar = () => {
   const handleSelect = (slug) => {
     setQuery("");
     setResults([]);
-    navigate(`/products/${slug}`);
+    navigate(`/product/${slug}`);
   };
 
   return (

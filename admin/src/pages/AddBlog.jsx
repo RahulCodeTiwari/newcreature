@@ -186,30 +186,30 @@ useEffect(() => {
       />
 
       
-<h3>seo update</h3>
-      <input
-  type="text"
-  placeholder="Meta Title (Optional)"
-  value={metaTitle}
-  onChange={(e) => setMetaTitle(e.target.value)}
-  className="border p-2 w-full mb-3"
-/>
+    <h3>seo update</h3>
+          <input
+      type="text"
+      placeholder="Meta Title (Optional)"
+      value={metaTitle}
+      onChange={(e) => setMetaTitle(e.target.value)}
+      className="border p-2 w-full mb-3"
+    />
 
-<textarea
-  placeholder="Meta Description (150-160 characters recommended)"
-  value={metaDescription}
-  onChange={(e) => setMetaDescription(e.target.value)}
-  className="border p-2 w-full mb-3"
-  rows={3}
-/>
+    <textarea
+      placeholder="Meta Description (150-160 characters recommended)"
+      value={metaDescription}
+      onChange={(e) => setMetaDescription(e.target.value)}
+      className="border p-2 w-full mb-3"
+      rows={3}
+    />
 
-<input
-  type="text"
-  placeholder="Canonical URL (Auto generated if empty)"
-  value={canonicalUrl}
-  onChange={(e) => setCanonicalUrl(e.target.value)}
-  className="border p-2 w-full mb-3"
-/>
+    <input
+      type="text"
+      placeholder="Canonical URL (Auto generated if empty)"
+      value={canonicalUrl}
+      onChange={(e) => setCanonicalUrl(e.target.value)}
+      className="border p-2 w-full mb-3"
+    />
 
 
       {/* Sections */}

@@ -3,7 +3,7 @@ import React from 'react'
 const About = () => {
   return (
        <section className=" px-4 ">
-      <div className="max-w-6xl mx-auto  p-6 md:p-10">
+      <div className="max-w-7xl mx-auto  p-6 md:p-10">
 
         {/* MAIN WRAPPER */}
         <div className="flex flex-col md:flex-row gap-10">

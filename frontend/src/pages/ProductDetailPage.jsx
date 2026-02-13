@@ -102,7 +102,7 @@ useEffect(() => {
 
 
   return (
-    <div className="w-full mx-auto px-4 ">
+    <div className="max-w-7xl mx-auto px-4 ">
       <h1 className="text-xl font-bold  uppercase ml-10">
             {product.name}
       </h1>

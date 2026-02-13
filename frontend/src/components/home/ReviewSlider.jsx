@@ -210,47 +210,47 @@ useEffect(() => {
         </div>
       )}
 
-      {/* Testimonials */}
-      <h3 className="text-center text-lg font-bold mb-2 mt-6">
-        TESTIMONIALS
-      </h3>
+            {/* Testimonials */}
+            <h3 className="text-center text-lg font-bold mb-2 mt-6">
+              TESTIMONIALS
+            </h3>
 
-      <div className="flex justify-center">
-        <a
-          href="https://www.google.com/maps/place/Creature+Industry+%7C+Best+Pouch+packing+machine+in+india/@26.7785552,80.8864902,17z/data=!4m14!1m7!3m6!1s0x399bff29746673e5:0x663b9ece1714177a!2sCreature+Industry+%7C+Best+Pouch+packing+machine+in+india!8m2!3d26.7785552!4d80.8864902!16s%2Fg%2F11sx__7hfs!3m5!1s0x399bff29746673e5:0x663b9ece1714177a!8m2!3d26.7785552!4d80.8864902!16s%2Fg%2F11sx__7hfs?entry=ttu"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block"
-        >
-          <div className="flex items-center gap-4 mb-4 mt-1 cursor-pointer text-center ">
-            <img
-              src="/logocreature.png"
-              alt="logo"
-              className="w-14 h-14 md:w-18 md:h-18 rounded-full border-2 border-blue-600 object-contain"
-            />
+            <div className="flex justify-center">
+              <a
+                href="https://www.google.com/maps/place/Creature+Industry+%7C+Best+Pouch+packing+machine+in+india/@26.7785552,80.8864902,17z/data=!4m14!1m7!3m6!1s0x399bff29746673e5:0x663b9ece1714177a!2sCreature+Industry+%7C+Best+Pouch+packing+machine+in+india!8m2!3d26.7785552!4d80.8864902!16s%2Fg%2F11sx__7hfs!3m5!1s0x399bff29746673e5:0x663b9ece1714177a!8m2!3d26.7785552!4d80.8864902!16s%2Fg%2F11sx__7hfs?entry=ttu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <div className="flex items-center gap-4 mb-4 mt-1 cursor-pointer text-center ">
+                  <img
+                    src="/logocreature.png"
+                    alt="logo"
+                    className="w-14 h-14 md:w-18 md:h-18 rounded-full border-2 border-blue-600 object-contain"
+                  />
 
 
-            <div>
-              <p className="text-sm font-semibold">
-                Creature Industry | Best Pouch Packing Machine supplier in India
-              </p>
+                  <div>
+                    <p className="text-sm font-semibold">
+                      Creature Industry | Best Pouch Packing Machine supplier in India
+                    </p>
 
-              <div className="flex items-center gap-1 text-yellow-400 justify-center">
-                <Star size={16} fill="currentColor" />
-                <Star size={16} fill="currentColor" />
-                <Star size={16} fill="currentColor" />
-                <Star size={16} fill="currentColor" />
-                <Star size={16} />
-                <span className="text-gray-600 text-sm ml-2">
-                  382 Google reviews
-                </span>
-                <button className="border-2 text-black px-2">Write a review</button>
+                    <div className="flex items-center gap-1 text-yellow-400 justify-center">
+                      <Star size={16} fill="currentColor" />
+                      <Star size={16} fill="currentColor" />
+                      <Star size={16} fill="currentColor" />
+                      <Star size={16} fill="currentColor" />
+                      <Star size={16} />
+                      <span className="text-gray-600 text-sm ml-2">
+                        382 Google reviews
+                      </span>
+                      <button className="border-2 text-black px-2">Write a review</button>
+                    </div>
+                  </div>
               </div>
-            </div>
-         </div>
-       </a>
+            </a>
 
-</div>
+      </div>
 
 
 

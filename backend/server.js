@@ -17,15 +17,13 @@ import dashboardRoutes from "./routes/dashboard.routes.js";
 
 dotenv.config();
 
-// --------------------
+
 // App & Server
-// --------------------
 const app = express();
 const server = http.createServer(app);
 
-// --------------------
-// Socket.io setup
-// --------------------
+
+// Socket.io setup--
 export const io = new Server(server, {
   cors: {
     origin: [
@@ -44,15 +42,13 @@ io.on("connection", (socket) => {
   });
 });
 
-// --------------------
+
 // Database
-// --------------------
 console.log("MONGO_URI =>", process.env.MONGO_URI);
 connectDB();
 
-// --------------------
+
 // Middleware
-// --------------------
 app.use(
   cors({
     origin: [
@@ -68,12 +64,8 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static("uploads"));
-
-
-
-// --------------------
+-
 // Routes
-// --------------------
 app.use("/api/auth", authRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/products", productRoutes);

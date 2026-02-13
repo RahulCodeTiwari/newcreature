@@ -5,8 +5,6 @@ import bcrypt from "bcryptjs";
 
 const router = express.Router();
 
-
-
 /**
  * POST /api/auth/login
  * ADMIN LOGIN ONLY
@@ -22,7 +20,6 @@ router.post("/login", async (req, res) => {
         message: "Email and password are required",
       });
     }
-
 
    const admin = await User.findOne({ email: normalizedEmail });
 

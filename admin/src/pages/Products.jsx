@@ -6,7 +6,6 @@ import RichTextEditor from "../components/RichTextEditor";
 
 const Products = () => {
   const { adminToken } = useContext(AuthContext);
-
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [groupName, setGroupName] = useState("");
@@ -30,7 +29,6 @@ const Products = () => {
   // Files
   const [sliderImages, setSliderImages] = useState([]);
   const [youtubeLink, setYoutubeLink] = useState("");
-
 
   const [blueImages, setBlueImages] = useState([]);
   const [blueHeading, setBlueHeading] = useState("");
@@ -66,8 +64,6 @@ const [editSpecifications, setEditSpecifications] = useState([{ key: "", value: 
   const [editMetaTitle, setEditMetaTitle] = useState("");
   const [editMetaDescription, setEditMetaDescription] = useState("");
   const [editCanonicalUrl, setEditCanonicalUrl] = useState("");
-
-
 
 
 const addBlock = () => {
@@ -342,9 +338,7 @@ const handleEditClick = (pro) => {
   setEditCanonicalUrl(pro.canonicalUrl || "");
   setEditCallNumber(pro.callNumber || "");
   setEditWhatsappNumber(pro.whatsappNumber || "");
-
   setEditYoutubeLink(pro.slider?.youtube?.link || "");
-
   setEditBlueHeading(pro.blueSection?.heading || "");
 
  setEditSpecifications(
@@ -363,11 +357,6 @@ const handleEditClick = (pro) => {
 
 
 const handleUpdate = async () => {
-  console.log("Sending SEO:",
-  metaTitle,
-  metaDescription,
-  canonicalUrl
-);
   try {
     setLoading(true);
 
@@ -380,12 +369,15 @@ const handleUpdate = async () => {
     );
 
 
-     if (editFeatures?.trim()) {
-      formData.append(
-        "features",
-        JSON.stringify(editFeatures.split(",").map(f => f.trim()))
-      );
-    }
+   if (Array.isArray(editFeatures) && editFeatures.length > 0) {
+  const cleanedFeatures = editFeatures
+    .map(f => typeof f === "string" ? f.trim() : "")
+    .filter(Boolean);
+
+  if (cleanedFeatures.length > 0) {
+    formData.append("features", JSON.stringify(cleanedFeatures));
+  }
+}
 
     formData.append("usage", editUsage);
     formData.append("description", JSON.stringify(editDescription));
@@ -555,30 +547,30 @@ const handleUpdate = async () => {
           className="border p-2 rounded w-full"
         />
 
-<h3 className="font-bold mt-6">SEO Settings</h3>
+        <h3 className="font-bold mt-6">SEO Settings</h3>
 
-<input
-  type="text"
-  placeholder="Meta Title"
-  value={editMetaTitle}
-  onChange={(e) => setEditMetaTitle(e.target.value)}
-  className="border p-2 w-full mb-3"
-/>
+        <input
+          type="text"
+          placeholder="Meta Title"
+          value={editMetaTitle}
+          onChange={(e) => setEditMetaTitle(e.target.value)}
+          className="border p-2 w-full mb-3"
+        />
 
-<textarea
-  placeholder="Meta Description"
-  value={editMetaDescription}
-  onChange={(e) => setEditMetaDescription(e.target.value)}
-  className="border p-2 w-full mb-3"
-/>
+        <textarea
+          placeholder="Meta Description"
+          value={editMetaDescription}
+          onChange={(e) => setEditMetaDescription(e.target.value)}
+          className="border p-2 w-full mb-3"
+        />
 
-<input
-  type="text"
-  placeholder="Canonical URL (Optional)"
-  value={editCanonicalUrl}
-  onChange={(e) => setEditCanonicalUrl(e.target.value)}
-  className="border p-2 w-full"
-/>
+        <input
+          type="text"
+          placeholder="Canonical URL (Optional)"
+          value={editCanonicalUrl}
+          onChange={(e) => setEditCanonicalUrl(e.target.value)}
+          className="border p-2 w-full"
+        />
 
         {/* CONTACT */}
         <input
@@ -727,7 +719,7 @@ const handleUpdate = async () => {
         }
         className="border p-2 rounded w-full"
       />
- <h4 className="font-semibold mt-2">About Product Images (max 5 allowed)</h4>
+    <h4 className="font-semibold mt-2">About Product Images (max 5 allowed)</h4>
       <input
         type="file"
         multiple
@@ -737,8 +729,6 @@ const handleUpdate = async () => {
         }
         className="border p-2 rounded w-full"
       />
-
-    
 
       {/* ACTIONS */}
       <div className="flex gap-3">
@@ -760,15 +750,14 @@ const handleUpdate = async () => {
     </form>
   )}
 
-
   <form onSubmit={handleAdd} className="space-y-4 border p-4 rounded bg-white">
         <div className="grid grid-cols-1  gap-2">
 
             <select
-            value={groupName || ""}
-            onChange={(e) => setGroupName(e.target.value)}
-            className="border p-2 rounded w-full"
-          >
+              value={groupName || ""}
+              onChange={(e) => setGroupName(e.target.value)}
+              className="border p-2 rounded w-full"
+            >
             <option value="">Select existing group</option>
             {groupNames.map((g) => (
               <option key={g} value={g}>
@@ -853,29 +842,28 @@ const handleUpdate = async () => {
 
         <h3 className="font-bold mt-6">SEO Settings</h3>
 
-<input
-  type="text"
-  placeholder="Meta Title"
-  value={metaTitle}
-  onChange={(e) => setMetaTitle(e.target.value)}
-  className="border p-2 w-full mb-3"
-/>
+          <input
+            type="text"
+            placeholder="Meta Title"
+            value={metaTitle}
+            onChange={(e) => setMetaTitle(e.target.value)}
+            className="border p-2 w-full mb-3"
+          />
 
-<textarea
-  placeholder="Meta Description"
-  value={metaDescription}
-  onChange={(e) => setMetaDescription(e.target.value)}
-  className="border p-2 w-full mb-3"
-/>
+          <textarea
+            placeholder="Meta Description"
+            value={metaDescription}
+            onChange={(e) => setMetaDescription(e.target.value)}
+            className="border p-2 w-full mb-3"
+          />
 
-<input
-  type="text"
-  placeholder="Canonical URL (Optional)"
-  value={canonicalUrl}
-  onChange={(e) => setCanonicalUrl(e.target.value)}
-  className="border p-2 w-full"
-/>
-
+          <input
+            type="text"
+            placeholder="Canonical URL (Optional)"
+            value={canonicalUrl}
+            onChange={(e) => setCanonicalUrl(e.target.value)}
+            className="border p-2 w-full"
+          />
 
          <input
           type="tel"
@@ -905,35 +893,35 @@ const handleUpdate = async () => {
         <div className="border p-4 rounded bg-gray-50">
           <h3 className="font-semibold mb-3">Product Description Sections</h3>
 
-      {description.map((block, index) => (
-       <div key={index} className="border p-3 rounded mb-3">
+            {description.map((block, index) => (
+            <div key={index} className="border p-3 rounded mb-3">
 
-          {/* HEADING */}
-          <input
-            type="text"
-            placeholder="Heading"
-            value={block.heading}
-            onChange={(e) => updateHeading(index, e.target.value)}
-            className="border p-2 rounded w-full mb-2"
-          />
+                {/* HEADING */}
+                <input
+                  type="text"
+                  placeholder="Heading"
+                  value={block.heading}
+                  onChange={(e) => updateHeading(index, e.target.value)}
+                  className="border p-2 rounded w-full mb-2"
+                />
 
-          {/* RICH TEXT */}
-          <RichTextEditor
-            value={block.text}
-            onChange={(html) => updateText(index, html)}
-          />
+                {/* RICH TEXT */}
+                <RichTextEditor
+                  value={block.text}
+                  onChange={(html) => updateText(index, html)}
+                />
 
-          {/* REMOVE */}
-          <button
-            type="button"
-            onClick={() => removeBlock(index)}
-            className="text-red-600 text-sm mt-2"
-          >
-            Remove Block
-          </button>
+                {/* REMOVE */}
+                <button
+                  type="button"
+                  onClick={() => removeBlock(index)}
+                  className="text-red-600 text-sm mt-2"
+                >
+                  Remove Block
+                </button>
 
-        </div>
-      ))}
+              </div>
+            ))}
             <button
               type="button"
               onClick={addBlock}
