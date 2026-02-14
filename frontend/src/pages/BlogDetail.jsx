@@ -1,6 +1,7 @@
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+ import api from "../api/axios";// 👈 axios instance use karo
 import DOMPurify from "dompurify";
 import { setSEO } from "../utils/seo";
 
@@ -8,33 +9,37 @@ const BlogDetail = () => {
   const { slug } = useParams();
   const [blog, setBlog] = useState(null);
 
+  // FETCH BLOG
   useEffect(() => {
-    axios
-      .get(`http://localhost:5000/api/blogs/${slug}`)
+    if (!slug) return;
+
+    api
+      .get(`/blog/${slug}`)   // 👈 baseURL already set hai
       .then((res) => {
-        // backend direct object bhej raha hai
         setBlog(res.data || null);
       })
-      .catch(console.error);
+      .catch((err) => {
+        console.error("Blog fetch error:", err);
+        setBlog(null);
+      });
   }, [slug]);
 
+  // SEO
   useEffect(() => {
     if (!blog) return;
-  
+
     setSEO({
       title: blog.metaTitle || blog.title || "",
-  
       description:
         blog.metaDescription?.slice(0, 160) ||
         blog.excerpt?.slice(0, 160) ||
         "",
-  
       canonical:
         blog.canonicalUrl ||
         `${window.location.origin}/blog/${blog.slug}`,
     });
   }, [blog]);
-  
+
   if (!blog) {
     return (
       <p className="text-center mt-20 text-lg">
@@ -44,43 +49,41 @@ const BlogDetail = () => {
   }
 
   return (
-   <div className="max-w-7xl mx-auto p-4">
-  <h1 className="text-3xl font-bold mb-6">
-    {blog.title}
-  </h1>
+    <div className="max-w-7xl mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-6">
+        {blog.title}
+      </h1>
 
-  {/* FEATURED IMAGE */}
-  {blog.featuredImage && (
-    <img
-      src={blog.featuredImage}
-      alt={blog.title}
-      className="mb-6 w-full rounded"
-    />
-  )}
-
-  {/* SECTIONS */}
-  {blog.sections?.map((section, index) => (
-    <div key={index} className="mb-8">
-      {/* SECTION HEADING */}
-      {section.heading && (
-        <h2 className="text-2xl font-semibold mb-3">
-          {section.heading}
-        </h2>
-      )}
-
-      {/* SECTION DESCRIPTION */}
-      {section.description && (
-        <div
-          className="prose max-w-none prose-a:text-orange-500 prose-a:underline"
-          dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(section.description),
-          }}
+      {/* Featured Image */}
+      {blog.featuredImage && (
+        <img
+          src={blog.featuredImage}
+          alt={blog.title}
+          className="mb-6 w-full rounded"
         />
       )}
-    </div>
-  ))}
-</div>
 
+      {/* Sections */}
+      {Array.isArray(blog.sections) &&
+        blog.sections.map((section, index) => (
+          <div key={index} className="mb-8">
+            {section.heading && (
+              <h2 className="text-2xl font-semibold mb-3">
+                {section.heading}
+              </h2>
+            )}
+
+            {section.description && (
+              <div
+                className="prose max-w-none prose-a:text-orange-500 prose-a:underline"
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(section.description),
+                }}
+              />
+            )}
+          </div>
+        ))}
+    </div>
   );
 };
 

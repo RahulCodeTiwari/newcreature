@@ -13,9 +13,9 @@ const About = () => {
 
             {/* TEXT 1 : ABOUT COMPANY */}
             <div>
-              <h4 className="text-orange-400 uppercase text-2xl tracking-wide mb-1">
+              <h1 className="text-orange-400 uppercase text-2xl tracking-wide mb-1">
                 About
-              </h4>
+              </h1>
               <h2 className="text-3xl font-bold text-blue-700 mb-4">
                 Company
               </h2>

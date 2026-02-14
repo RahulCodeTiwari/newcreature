@@ -43,7 +43,7 @@ const FAQSection = () => {
               className="flex justify-between items-center w-full text-left"
               onClick={() => setOpen(open === index ? null : index)}
             >
-              <span className="font-bold text-sm text-sky-900">
+              <span className="font-semibold text-sm text-sky-900">
                 {item.q}
               </span>
               <ChevronDown

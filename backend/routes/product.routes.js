@@ -43,7 +43,7 @@ router.post(
     { name: "image", maxCount: 1 },
     { name: "brochure", maxCount: 1 },
     { name: "sliderImages", maxCount: 5 },
-    { name: "blueImages", maxCount: 5 },
+    { name: "blueImages", maxCount: 12 },
   ]),
   createProduct
 );
@@ -56,7 +56,7 @@ router.put(
     { name: "image", maxCount: 1 },
     { name: "brochure", maxCount: 1 },
     { name: "sliderImages", maxCount: 5 },
-    { name: "blueImages", maxCount: 5 },
+    { name: "blueImages", maxCount: 12 },
   ]),
   updateProduct
 );

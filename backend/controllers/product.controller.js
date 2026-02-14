@@ -17,22 +17,35 @@ const parseIfJson = (value) => {
   }
 };
 
-const uploadToCloudinary = (file, folder, resource_type = "image") =>
+const uploadToCloudinary = (file, folder, resourceType = "auto") =>
   new Promise((resolve, reject) => {
+    if (!file || !file.buffer || !file.buffer.length) {
+      return reject(new Error("File buffer missing or empty"));
+    }
+
     const stream = cloudinary.uploader.upload_stream(
-      { folder, resource_type },
+      {
+        folder,
+        resource_type: resourceType,
+        use_filename: true,
+        unique_filename: true,
+      },
       (error, result) => {
-        if (error) reject(error);
-        else resolve(result.secure_url);
+        if (error) return reject(error);
+        resolve(result.secure_url);
       }
     );
+
+    stream.on("error", reject);
     stream.end(file.buffer);
   });
 
-  
 
 /* ================== CREATE SUBCATEGORY ================== */
 export const createProduct = async (req, res) => {
+
+
+
   try {
     const {
       name,
@@ -143,7 +156,7 @@ const youtubeLink = req.body.youtubeLink || "";
     // Blue section images
     const blueImages = [];
     if (req.files?.blueImages) {
-      for (const file of req.files.blueImages.slice(0, 5)) {
+      for (const file of req.files.blueImages.slice(0, 12)) {
         blueImages.push(
           await uploadToCloudinary(file, "creature_industry/products/blue")
         );
@@ -520,7 +533,7 @@ export const updateProduct = async (req, res) => {
 
       if (hasBlueImages) {
         blueImages = [];
-        for (const file of req.files.blueImages.slice(0, 5)) {
+        for (const file of req.files.blueImages.slice(0, 12)) {
           blueImages.push(
             await uploadToCloudinary(
               file,

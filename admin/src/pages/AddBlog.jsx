@@ -82,7 +82,7 @@ const AddBlog = () => {
     // Add vs update
     if (editingBlogId) {
       await axios.put(
-        `/blogs/${editingBlogId}`,
+        `/blog/${editingBlogId}`,
         formData,
         {
           headers: {
@@ -97,7 +97,7 @@ const AddBlog = () => {
       }
 
     
-      await axios.post("/blogs", formData, {
+      await axios.post("/blog", formData, {
         headers: {
           Authorization: `Bearer ${adminToken}`,
         },
@@ -136,7 +136,7 @@ const AddBlog = () => {
       try {
         setLoading(true);
 
-        await axios.delete(`/blogs/${id}`, {
+        await axios.delete(`/blog/${id}`, {
           headers: {
             Authorization: `Bearer ${adminToken}`,
           },
@@ -155,7 +155,7 @@ const AddBlog = () => {
 
   const fetchBlogs = async () => {
   try {
-    const res = await axios.get("/blogs", {
+    const res = await axios.get("/blog", {
       headers: {
         Authorization: `Bearer ${adminToken}`, // agar protect laga hai
       },

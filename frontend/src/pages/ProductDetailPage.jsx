@@ -103,10 +103,12 @@ useEffect(() => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 ">
-      <h1 className="text-xl font-bold  uppercase ml-10">
+      <h1 className="text-2xl font-bold  uppercase ml-10 mt-10">
             {product.name}
       </h1>
-        <button className="text-[rgb(0,52,102)] font-semibold ml-10">Get latest price</button>
+
+<a href="/contact" className="text-[rgb(0,52,102)] font-semibold ml-10 hover:text-blue-400">Get latest price</a>
+
               {/* 🔹 TOP SECTION */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
@@ -134,36 +136,36 @@ useEffect(() => {
 
             {/* YOUTUBE SLIDE */}
 
-  {slide === "YOUTUBE" && videoId && (
-                  <a
-                    href={product?.slider?.youtube?.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="ml-12 lg:ml-24 w-full h-full relative block rounded overflow-hidden cursor-pointer"
-                  >
-                    <img
-                      src={youtubeThumbnail}
-                      alt="YouTube Video"
-                      className="w-full h-full object-cover"
-                    />
+          {slide === "YOUTUBE" && videoId && (
+                          <a
+                            href={product?.slider?.youtube?.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="ml-12 lg:ml-24 w-full h-full relative block rounded overflow-hidden cursor-pointer"
+                          >
+                            <img
+                              src={youtubeThumbnail}
+                              alt="YouTube Video"
+                              className="w-full h-full object-cover"
+                            />
 
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center">
-                        <svg
-                          className="w-8 h-8 text-white"
-                          fill="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                      </div>
-                    </div>
-                  </a>
-                )}
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center">
+                                <svg
+                                  className="w-8 h-8 text-white"
+                                  fill="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path d="M8 5v14l11-7z" />
+                                </svg>
+                              </div>
+                            </div>
+                          </a>
+                        )}
 
-          </div>
-      ))}
-    </div>
+                  </div>
+              ))}
+            </div>
 
         {/* DOTS BELOW SLIDER */}
         <div className="flex justify-center gap-2 mt-4">
@@ -178,21 +180,15 @@ useEffect(() => {
             />
             
           ))}
-  {videoId && (
-  <img
-    src="/assets/icons/video-solid.svg"
-    alt="Video"
-    className="-mt-2 h-6"
-  />
-)}
-
-        
+            {videoId && (
+            <img
+              src="/assets/icons/video-solid.svg"
+              alt="Video"
+              className="-mt-2 h-6"
+            />
+          )}
         </div>
-       
-
     </div>
-
-       
 
         {/* BASIC INFO */}
         <div>
@@ -208,8 +204,8 @@ useEffect(() => {
           {/* Specifications */}
              {product.specifications && (
                 <>
-                  <div className="bg-[rgb(0,52,102)] text-white text-center font-semibold px-4 py-1 md:py-2 p-2 shadow-sm">
-                      PRODUCT SPECIFICATION
+                  <div className="bg-[rgb(0,52,102)] text-white  px-4 py-1 md:py-2 p-2 shadow-sm">
+                     <h2 className="text-center text-xl font-semibold">PRODUCT SPECIFICATION</h2> 
                   </div>
                 <table className="w-full text-sm shadow-xl border-collapse">
                   <tbody>
@@ -268,32 +264,34 @@ useEffect(() => {
         )}
 
         {product.brochureUrl && (
-          <a
-            href={product.brochureUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-1 flex items-center justify-center gap-2
-            bg-[rgb(0,52,102)] text-white py-2
-            rounded-lg text-sm md:text-base
-            hover:opacity-90 transition"
-          >
-            <img
-              src="/assets/icons/dounloadbrochure.png"
-              alt="Brochure"
-              className="w-5 h-5"
-            />
-            Brochure
-          </a>
-        )}
+        <a
+          href={product.brochureUrl.replace(
+            "/upload/",
+            "/upload/fl_attachment/"
+          )}
+          className="flex-1 flex items-center justify-center gap-2
+          bg-[rgb(0,52,102)] text-white py-2
+          rounded-lg text-sm md:text-base
+          hover:opacity-90 transition cursor-pointer"
+        >
+          <img
+            src="/assets/icons/dounloadbrochure.png"
+            alt="Brochure"
+            className="w-5 h-5"
+          />
+          Brochure
+        </a>
+      )}
+
 
       </div>
       </div>
       </div>
 
       <div className="flex justify-center bg-blue-100 py-2 text-black mt-4  gap-2">
-        <h1 className="w-40 text-sm rounded-2xl font-semibold bg-white py-1 text-center">
+        <p className="w-40 text-sm rounded-2xl font-semibold bg-white py-1 text-center">
           Product Description
-        </h1>
+        </p>
         <button className="border-2 px-2 bg-white font-semibold">Write a review</button>
       </div>
 
@@ -303,9 +301,9 @@ useEffect(() => {
 
           return (
             <div key={block._id} className="mt-4">
-              <h3 className="font-semibold text-lg">
+              <h2 className="font-semibold text-xl">
                 {block.heading}
-              </h3>
+              </h2>
 
               <div className="richtext text-gray-700 leading-6"
               dangerouslySetInnerHTML={{
@@ -336,32 +334,32 @@ useEffect(() => {
         )}
 
 
-      {/* 🔹 BLUE SECTION */}
- {product.blueSection?.heading ||
-product.blueSection?.images?.length > 0 ? (
-  <div className="rounded">
-    {product.blueSection.heading && (
-      <h2 className="text-xl font-bold text-center bg-[rgb(0,52,102)] text-white mb-2">
-        {product.blueSection.heading}
-      </h2>
-    )}
+          {/* 🔹 BLUE SECTION */}
+    {product.blueSection?.heading ||
+    product.blueSection?.images?.length > 0 ? (
+      <div className="rounded">
+        {product.blueSection.heading && (
+          <h2 className="text-xl font-bold text-center bg-[rgb(0,52,102)] text-white mb-2">
+            {product.blueSection.heading}
+          </h2>
+        )}
 
-    {product.blueSection.images?.length > 0 && (
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {product.blueSection.images.map((img, i) => (
-          <img
-            key={i}
-            src={img}
-            alt=""
-            className={`rounded shadow-sm w-full ${
-              i === 0 ? "md:col-span-2" : ""
-            }`}
-          />
-        ))}
+        {product.blueSection.images?.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {product.blueSection.images.map((img, i) => (
+              <img
+                key={i}
+                src={img}
+                alt=""
+                className={`rounded shadow-sm w-full ${
+                  i === 0 ? "md:col-span-2" : ""
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </div>
-    )}
-  </div>
-) : null}
+    ) : null}
 
 
       <h3 className="text-xl  text-center bg-[rgb(0,52,102)] text-white py-1">Related Products</h3>

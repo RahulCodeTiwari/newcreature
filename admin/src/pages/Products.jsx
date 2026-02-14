@@ -6,6 +6,7 @@ import RichTextEditor from "../components/RichTextEditor";
 
 const Products = () => {
   const { adminToken } = useContext(AuthContext);
+
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [groupName, setGroupName] = useState("");
@@ -324,6 +325,7 @@ const handleAdd = async (e) => {
 };
 
 const handleEditClick = (pro) => {
+ 
   setIsEditing(true);
   setEditId(pro._id);
 
@@ -462,6 +464,7 @@ const handleUpdate = async () => {
        
       <h1 className="text-2xl font-bold mb-4">Products</h1>
 
+
       {isEditing && (
       <form
         onSubmit={(e) => {
@@ -470,7 +473,7 @@ const handleUpdate = async () => {
         }}
         className="space-y-4 border p-4 rounded bg-yellow-50"
       >
-        <h2 className="text-lg font-bold">Update Product</h2>
+        <h1 className="text-2xl font-bold">Update Product Form (update only)</h1>
 
         {/* GROUP NAME (READ ONLY or OPTIONAL) */}
         <input
@@ -719,7 +722,7 @@ const handleUpdate = async () => {
         }
         className="border p-2 rounded w-full"
       />
-    <h4 className="font-semibold mt-2">About Product Images (max 5 allowed)</h4>
+    <h4 className="font-semibold mt-2">About Product Images (max 12 allowed)</h4>
       <input
         type="file"
         multiple
@@ -750,9 +753,16 @@ const handleUpdate = async () => {
     </form>
   )}
 
-  <form onSubmit={handleAdd} className="space-y-4 border p-4 rounded bg-white">
-        <div className="grid grid-cols-1  gap-2">
+<h1 className="text-2xl font-bold mt-10">Add Product Form (only for add)</h1>
 
+{!isEditing && (
+  <form onSubmit={handleAdd} className="space-y-4 border p-4 rounded bg-white ">
+        <div className="grid grid-cols-1  gap-2">
+ 
+          <label className="font-semibold mt-4">
+            Select Group or Add new Group (compulsary section)
+             <span className="text-red-500">*</span>
+          </label>
             <select
               value={groupName || ""}
               onChange={(e) => setGroupName(e.target.value)}
@@ -776,6 +786,11 @@ const handleUpdate = async () => {
           />
 
           {/* Category */}
+           
+          <label className="font-semibold mt-4">
+            Select Category (compulsary section)
+             <span className="text-red-500">*</span>
+          </label>
           <select
             value={categoryId}
             onChange={(e) => setCategoryId(e.target.value)}
@@ -790,6 +805,11 @@ const handleUpdate = async () => {
           </select>
 
             {/* Product Name */}
+             
+          <label className="font-semibold mt-4">
+            Product Name (compulsary section)
+             <span className="text-red-500">*</span>
+          </label>
           <input
             type="text"
             placeholder="Product name (eg: Gas5)"
@@ -797,8 +817,12 @@ const handleUpdate = async () => {
             onChange={(e) => setName(e.target.value)}
             className="border p-2 rounded"
           />
- 
-          <h4 className="font-semibold mt-4">Upload procategory image (max 1 allowed)</h4>
+  
+          <label className="font-semibold mt-4">
+           Upload procategory image (max 1 allowed) (compulsary section)
+             <span className="text-red-500">*</span>
+          </label>
+        
           <input
             type="file"
             accept="image/*"
@@ -891,11 +915,15 @@ const handleUpdate = async () => {
 
 
         <div className="border p-4 rounded bg-gray-50">
-          <h3 className="font-semibold mb-3">Product Description Sections</h3>
+          
+          <label className="font-semibold mb-3">
+            Product Description Sections (compulsary section)
+             <span className="text-red-500">*</span>
+          </label>
 
             {description.map((block, index) => (
             <div key={index} className="border p-3 rounded mb-3">
-
+   
                 {/* HEADING */}
                 <input
                   type="text"
@@ -961,7 +989,7 @@ const handleUpdate = async () => {
           className="border p-2 rounded w-full"
         />
 
-        <h4 className="font-semibold mt-2">About Product Images (max 5 allowed)</h4>
+        <h4 className="font-semibold mt-2">About Product Images (max 12 allowed)</h4>
         <input
           type="file"
           multiple
@@ -1016,8 +1044,7 @@ const handleUpdate = async () => {
             </button>
           </div>  
       </form>
-
-
+)}
 
       {/* ===== SUBCATEGORY LIST ===== */}
       <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">

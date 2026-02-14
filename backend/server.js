@@ -54,7 +54,8 @@ app.use(
     origin: [
       "http://localhost:5173",
       "http://localhost:5174",
-      "http://192.168.0.102:5173",
+      "http://192.168.1.24:5173",
+       "http://192.168.1.24:5174",
     ],
     credentials: true,
   })
@@ -71,7 +72,7 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/home-top-products", homeTopProductRoutes);
 app.use("/api/contacts", contactRoutes);
-app.use("/api/blogs", blogRoutes);
+app.use("/api/blog", blogRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 
 // Test Route

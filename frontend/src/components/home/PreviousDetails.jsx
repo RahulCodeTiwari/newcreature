@@ -45,13 +45,13 @@ const PreviousDetails = () => {
               >
                 <div className="text-2xl">{stat.icon}</div>
 
-                <h3 className="text-xl font-bold">
+                <p className="text-xl font-bold">
                   {startCount ? (
                     <CountUp start={0} end={stat.value} duration={2} suffix="+" />
                   ) : (
                     "0+"
                   )}
-                </h3>
+                </p>
 
                 <p className="text-sm text-sky-200">{stat.label}</p>
               </div>

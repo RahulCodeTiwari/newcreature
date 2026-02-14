@@ -16,9 +16,9 @@ const SearchResultPage = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-xl mb-4">
+      <h1 className="text-xl mb-4">
         Results for "{query}"
-      </h2>
+      </h1>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {data.map((item) => (

@@ -70,9 +70,9 @@ const InquirySection = () => {
 
           {/* RIGHT CONTENT */}
           <div className="w-full md:w-2/3 flex flex-col items-center md:items-start">
-            <h2 className="text-xl font-bold uppercase">
+            <h4 className="text-lg font-semibold uppercase">
               Post by Requirement
-            </h2>
+            </h4>
 
             <p className="text-gray-600 mt-2">
               Submit your requirements and get customized quotes from us.

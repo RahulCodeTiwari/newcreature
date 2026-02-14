@@ -4,18 +4,13 @@ const ContactForm = ({
   title = "Get in Touch",
   buttonText = "Submit",
   onSubmit,
- 
-
 }) => {
-
-
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
     email: "",
     message: "",
   });
-
   const [showSuccess, setShowSuccess] = useState(false);
   const handleSubmitComplaint = () => {
   const selected = document.querySelector(
@@ -82,9 +77,9 @@ const ContactForm = ({
           <div className=" md:w-full order-1">
             <div className="flex flex-col md:flex-row  gap-4  ">
               <div className="bg-gray-50 p-6 rounded-xl shadow-md w-full max-w-md mx-auto">
-                  <h3 className="text-xl font-semibold mb-4 text-center">
+                  <h1 className="text-xl font-semibold mb-4 text-center">
                     {title}
-                  </h3>
+                  </h1>
 
                   <form onSubmit={handleSubmit} className="space-y-4 ">
                     <input
@@ -95,10 +90,8 @@ const ContactForm = ({
                       onChange={handleChange}
                       required
                       className="w-full border rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-600"
-                    />
-
-                                
-                      <input
+                    />           
+                    <input
                       type="tel"
                       name="phone"
                       placeholder="Phone Number"
@@ -144,16 +137,13 @@ const ContactForm = ({
                     </form> 
                   </div>
 
-                    
-    
-  
                 {/* Text Box */}
                 <div className="w-full md:w-1/2 order-2 space-y-8">
 
                   <div className="bg-gray-50 border rounded-xl p-6 space-y-2">
-                    <h3 className="text-2xl font-bold">
+                    <h2 className="text-2xl font-bold">
                       Get In Touch
-                    </h3>
+                    </h2>
 
                     <p className="text-gray-600 text-sm leading-relaxed">
                       Our support team is always ready to help you. Feel free to contact us
@@ -236,16 +226,15 @@ const ContactForm = ({
                       </div>
                     </div>
                     {showSuccess && (
-  <div className="mb-4 text-green-700 bg-green-100 border border-green-300 px-4 py-2 rounded">
-    ✅ Your complaint has been submitted successfully
-  </div>
-)}
-
-                     
+                      <div className="mb-4 text-green-700 bg-green-100 border border-green-300 px-4 py-2 rounded">
+                        ✅ Your complaint has been submitted successfully
+                      </div>
+                    )}
+              
          {/* Submit Button */}
               <div className="text-center mt-6">
                 <button onClick={handleSubmitComplaint}
- className="bg-sky-800 text-white px-8 py-2 rounded hover:bg-sky-700 transition">
+                  className="bg-sky-800 text-white px-8 py-2 rounded hover:bg-sky-700 transition">
                   Submit
                 </button>    
               </div>

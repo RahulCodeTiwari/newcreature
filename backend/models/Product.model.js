@@ -1,4 +1,3 @@
-
 import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
@@ -118,8 +117,8 @@ const productSchema = new mongoose.Schema(
       images: {
         type: [String],
         validate: {
-          validator: (arr) => arr.length <= 5,
-          message: "Maximum 5 blue section images allowed",
+          validator: (arr) => arr.length <= 12,
+          message: "Maximum 12 blue section images allowed",
         },
         default: [],
       },
